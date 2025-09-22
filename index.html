@@ -134,6 +134,58 @@
             color: white;
             line-height: 1.6;
         }
+            /* Info Boxes container */
+    .info-boxes {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 50px;
+        flex-wrap: wrap;
+    }
+
+    .info-box {
+        width: 300px;
+        height: 150px;
+        border: 4px solid white;
+        border-radius: 15px;
+        background: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .info-box:hover {
+        background: rgba(255,255,255,0.1);
+        transform: scale(1.05);
+    }
+
+    .info-box h2 {
+        font-size: 28px;
+        color: white;
+        margin: 0;
+    }
+
+    #info-content {
+        margin-top: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    #info-content img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    #info-content p {
+        color: white;
+        line-height: 1.6;
+    }
     </style>
 </head>
 <body>
@@ -167,6 +219,18 @@
 
     <!-- Description -->
     <div id="description"></div>
+        <!-- UDI-nomics and Roadmap Boxes -->
+    <div class="info-boxes">
+        <div class="info-box" onclick="showUDInomics()">
+            <h2>UDI-nomics</h2>
+        </div>
+        <div class="info-box" onclick="showRoadmap()">
+            <h2>Roadmap</h2>
+        </div>
+    </div>
+
+    <!-- Display content here -->
+    <div id="info-content"></div>
 
     <script>
         function showDescription(title, color, text) {
@@ -183,6 +247,20 @@
     setTimeout(() => copied.style.display = "none", 2000);
   });
 }
+    function showUDInomics() {
+        document.getElementById("info-content").innerHTML = `
+            <h2 style="color:white"><b>UDI-nomics</b></h2>
+            <p>This is where you describe your tokenomics details. Allocation, liquidity, staking, and more.</p>
+            <img src="tokenomics-pie.png" alt="Tokenomics Pie Chart">
+        `;
+    }
+
+    function showRoadmap() {
+        document.getElementById("info-content").innerHTML = `
+            <h2 style="color:white"><b>Roadmap</b></h2>
+            <p>Coming soon... (You can add your roadmap content here later)</p>
+        `;
+    }
     </script>
 <footer>
   <p>© 2025 UDI. All rights reserved. | contact@updowninfinity.xyz</p>
