@@ -306,7 +306,7 @@
         <!-- UDI-nomics and Roadmap Boxes -->
     <div class="info-boxes">
         <div class="info-box" onclick="showUDInomics()">
-            <h2>UDInomics</h2>
+            <h2>Tokenomics</h2>
         </div>
         <div class="info-box" onclick="showRoadmap()">
             <h2>Roadmap</h2>
@@ -346,7 +346,7 @@
   function showUDInomics() {
     const info = document.getElementById("info-content");
 
-    if (info.dataset.current === "UDInomics") {
+    if (info.dataset.current === "Tokenomics") {
       info.innerHTML = "";
       info.dataset.current = "";
     } else {
@@ -359,7 +359,7 @@
           </div>
         </div>
       `;
-      info.dataset.current = "UDInomics";
+      info.dataset.current = "Tokenomics";
     }
   }
 
