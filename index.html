@@ -231,37 +231,66 @@
 
     <!-- Display content here -->
     <div id="info-content"></div>
-
-    <script>
-        function showDescription(title, color, text) {
-            document.getElementById("description").innerHTML = `
-                <h2 style="color:${color}"><b>${title}</b></h2>
-                <p>${text}</p>
-            `;
-        }
-        function copyAddress() {
-  const address = document.getElementById("contractAddress").textContent;
-  navigator.clipboard.writeText(address).then(() => {
-    const copied = document.getElementById("copiedText");
-    copied.style.display = "inline";
-    setTimeout(() => copied.style.display = "none", 2000);
-  });
-}
-    function showUDInomics() {
-        document.getElementById("info-content").innerHTML = `
-            <h2 style="color:white"><b>ALLOCATION</b></h2>
-            <p>Loading...</p>
-            <img src="IMG_1933.png" alt="Tokenomics Pie Chart">
-        `;
+<script>
+  // Katana toggle
+  function showDescription(title, color, text) {
+    const desc = document.getElementById("description");
+    
+    if (desc.dataset.current === title) {
+      desc.innerHTML = "";
+      desc.dataset.current = "";
+    } else {
+      desc.innerHTML = `
+        <h2 style="color:${color}"><b>${title}</b></h2>
+        <p>${text}</p>
+      `;
+      desc.dataset.current = title;
     }
+  }
 
-    function showRoadmap() {
-        document.getElementById("info-content").innerHTML = `
-            <h2 style="color:white"><b>Roadmap</b></h2>
-            <p>Coming soon...</p>
-        `;
+  // Copy Address
+  function copyAddress() {
+    const address = document.getElementById("contractAddress").textContent;
+    navigator.clipboard.writeText(address).then(() => {
+      const copied = document.getElementById("copiedText");
+      copied.style.display = "inline";
+      setTimeout(() => copied.style.display = "none", 2000);
+    });
+  }
+
+  // UDI-nomics toggle
+  function showUDInomics() {
+    const info = document.getElementById("info-content");
+
+    if (info.dataset.current === "UDInomics") {
+      info.innerHTML = "";
+      info.dataset.current = "";
+    } else {
+      info.innerHTML = `
+        <h2 style="color:white"><b>ALLOCATION</b></h2>
+        <p>Loading...</p>
+        <img src="IMG_1933.png" alt="Tokenomics Pie Chart">
+      `;
+      info.dataset.current = "UDInomics";
     }
-    </script>
+  }
+
+  // Roadmap toggle
+  function showRoadmap() {
+    const info = document.getElementById("info-content");
+
+    if (info.dataset.current === "Roadmap") {
+      info.innerHTML = "";
+      info.dataset.current = "";
+    } else {
+      info.innerHTML = `
+        <h2 style="color:white"><b>Roadmap</b></h2>
+        <p>Coming soon...</p>
+      `;
+      info.dataset.current = "Roadmap";
+    }
+  }
+</script>
 <footer>
   <p>© 2025 UDI. All rights reserved. | contact@updowninfinity.xyz</p>
 </footer>
