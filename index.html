@@ -220,6 +220,29 @@
         color: white;
         line-height: 1.6;
     }
+    /* Container 2 columns */
+.info-content-two-column {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap; 
+  text-align: left;
+}
+
+/* left column */
+.info-content-two-column img {
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* right column */
+.info-content-two-column .text {
+  max-width: 400px;
+  color: white;
+  line-height: 1.6;
+}
     </style>
 </head>
 <body>
@@ -320,9 +343,13 @@
       info.dataset.current = "";
     } else {
       info.innerHTML = `
-        <h2 style="color:white"><b>ALLOCATION</b></h2>
-        <p>Loading...</p>
-        <img src="IMG_1933.png" alt="Tokenomics Pie Chart">
+        <div class="info-content-two-column">
+          <img src="IMG_1933.png" alt="Tokenomics Pie Chart">
+          <div class="text">
+            <h2 style="color:white"><b>ALLOCATION</b></h2>
+            <p>Loading...</p>
+          </div>
+        </div>
       `;
       info.dataset.current = "UDInomics";
     }
@@ -337,12 +364,18 @@
       info.dataset.current = "";
     } else {
       info.innerHTML = `
-        <h2 style="color:white"><b>Roadmap</b></h2>
-        <p>Coming soon...</p>
+        <div class="info-content-two-column">
+          <img src="roadmap-image.png" alt="Roadmap">
+          <div class="text">
+            <h2 style="color:white"><b>Roadmap</b></h2>
+            <p>Coming soon...</p>
+          </div>
+        </div>
       `;
       info.dataset.current = "Roadmap";
     }
   }
+
 </script>
 <footer>
   <p>© 2025 UDI. All rights reserved. | contact@updowninfinity.xyz</p>
