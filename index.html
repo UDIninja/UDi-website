@@ -6,8 +6,11 @@
     <title>UDI</title>
     <link rel="icon" type="image/png" href="UDifavicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-</head>
     <style>
+        :root {
+          --fade-duration: 600ms; /* chỉnh tốc độ ở đây */
+        }
+
         body {
             background-color: #fd8f00;
             background: url('background.png') no-repeat center center fixed;
@@ -17,88 +20,89 @@
             font-family: Special Elite, cursive;
             text-align: center;
             padding-bottom: 60px;
-}
+        }
         /* Contract Address Section */
-.contract-container {
-  margin-top: 5px;
-  display: inline-flex;
-  align-items: center;
-  gap: 25px;
-  background: rgba(255,255,255,0.1);
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-family: Special Elite, cursive; 
-}
-.contract-address {
-  font-size: 22px;
-  word-break: break-all;
-}
-.copy-btn {
-  background: white;
-  color: #fd8f00;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: 0.3s;
-  font-family: Special Elite, cursive; 
-}
-.copy-btn:hover {
-  background: #eee;
-}
-.copied {
-  color: #00ff66;
-  font-size: 14px;
-  margin-left: 10px;
-  display: none;
-  font-family: Special Elite, cursive; 
-}
-          /* Social section */
+        .contract-container {
+          margin-top: 5px;
+          display: inline-flex;
+          align-items: center;
+          gap: 25px;
+          background: rgba(255,255,255,0.1);
+          padding: 8px 15px;
+          border-radius: 8px;
+          font-family: Special Elite, cursive; 
+        }
+        .contract-address {
+          font-size: 22px;
+          word-break: break-all;
+        }
+        .copy-btn {
+          background: white;
+          color: #fd8f00;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          font-weight: bold;
+          border-radius: 5px;
+          transition: 0.3s;
+          font-family: Special Elite, cursive; 
+        }
+        .copy-btn:hover {
+          background: #eee;
+        }
+        .copied {
+          color: #00ff66;
+          font-size: 14px;
+          margin-left: 10px;
+          display: none;
+          font-family: Special Elite, cursive; 
+        }
+
+        /* Social section */
         .social-icons {
-  position: fixed;
-  top: 15%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px; 
-  z-index: 999;
-}
+          position: fixed;
+          top: 15%;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          gap: 10px; 
+          z-index: 999;
+        }
 
-.social-icons.left {
-  left: 35px; 
-}
+        .social-icons.left {
+          left: 35px; 
+        }
 
-.social-icons.right {
-  right: 35px; 
-}
+        .social-icons.right {
+          right: 35px; 
+        }
 
-.social-icons img {
-  width: 45px; 
-  height: 45px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  padding: 6px;
-  transition: 1s;
-}
+        .social-icons img {
+          width: 45px; 
+          height: 45px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.2);
+          padding: 6px;
+          transition: 1s;
+        }
 
-.social-icons img:hover {
-  background: rgba(255,255,255,0.3);
-  transform: scale(1.2);
-  box-shadow: 0 0 12px #ffffff; 
-}
-        
+        .social-icons img:hover {
+          background: rgba(255,255,255,0.3);
+          transform: scale(1.2);
+          box-shadow: 0 0 12px #ffffff; 
+        }
+
         footer {
-    position: static;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    font-size: 12px;
-    color: white;
-    text-align: center;
-    background: transparent;
-}
+            position: static;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            background: transparent;
+        }
 
         /* Logo */
         .logo {
@@ -117,7 +121,6 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
-            
         }
 
         /* Circles row */
@@ -167,6 +170,7 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
+            min-height: 1px; /* giữ layout */
         }
         #description h2 {
             margin-bottom: 10px;
@@ -178,94 +182,118 @@
             line-height: 1.6;
             text-align: center;
         }
-            /* Info Boxes container */
-    .info-boxes {
-        display: flex;
-        justify-content: center;
-        gap: 90px;
-        margin-top: 50px;
-        flex-wrap: wrap;
-    }
 
-    .info-box {
-        width: 200px;
-        height: 50px;
-        border: 5px solid white;
-        border-radius: 15px;
-        background: rgba(255,255,255,0.05);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 1s;
-    }
+        /* Info Boxes container */
+        .info-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 90px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
 
-    .info-box:hover {
-        background: rgba(255,255,255,0.1);
-        transform: scale(1.05);
-    }
+        .info-box {
+            width: 200px;
+            height: 50px;
+            border: 5px solid white;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 1s;
+        }
 
-    .info-box h2 {
-        font-size: 30px;
-        color: white;
-        margin: 0;
-    }
+        .info-box:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+        }
 
-    #info-content {
-        margin-top: 40px;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-    }
+        .info-box h2 {
+            font-size: 30px;
+            color: white;
+            margin: 0;
+        }
 
-    #info-content img {
-        max-width: 250px;
-        height: auto;
-        margin-top: 20px;
-        border-radius: 10px;
-    }
+        #info-content {
+            margin-top: 40px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            min-height: 1px;
+        }
 
-    #info-content p {
-        color: white;
-        line-height: 1.6;
-    }
-    /* Container 2 columns */
-.info-content-two-column {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 80px;
-  flex-wrap: wrap; 
-  text-align: left;
-}
+        #info-content img {
+            max-width: 250px;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
 
-/* left column */
-.info-content-two-column img {
-  max-width: 250px;
-  height: auto;
-  border-radius: 10px;
-}
+        #info-content p {
+            color: white;
+            line-height: 1.6;
+        }
 
-/* right column */
-.info-content-two-column .text {
-  max-width: 600px;
-  color: white;
-  line-height: 1.6;
-}
+        /* Container 2 columns */
+        .info-content-two-column {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 80px;
+          flex-wrap: wrap; 
+          text-align: left;
+        }
+
+        /* left column */
+        .info-content-two-column img {
+          max-width: 250px;
+          height: auto;
+          border-radius: 10px;
+        }
+
+        /* right column */
+        .info-content-two-column .text {
+          max-width: 600px;
+          color: white;
+          line-height: 1.6;
+        }
+
+        /* --- Fade animation helper --- */
+        .fade {
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity var(--fade-duration) ease, transform var(--fade-duration) ease;
+          will-change: opacity, transform;
+        }
+        .fade.show {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* small helper so content width looks correct */
+        .content-block {
+          display: inline-block;
+          max-width: 1000px;
+          text-align: center;
+        }
     </style>
 </head>
 <body>
 <!-- Contract Address Section -->
     <div class="contract-container">
-  <span class="contract-address" id="contractAddress">Coming soon...</span>
-  <button class="copy-btn" onclick="copyAddress()">Copy</button>
-  <span class="copied" id="copiedText">Copied!</span>
+      <span class="contract-address" id="contractAddress">Coming soon...</span>
+      <button class="copy-btn" onclick="copyAddress()">Copy</button>
+      <span class="copied" id="copiedText">Copied!</span>
     </div>
+
     <!-- Logo -->
     <div class="logo">
         <img src="IMG_1930.gif" alt="UDI Logo">
     </div>
+
     <!-- Social Icons Left -->
 <div class="social-icons left">
   <a href="https://t.me/updowninfinityy" target="_blank">
@@ -300,12 +328,12 @@
         <div class="circle yellow" onclick="showDescription('Infino', '#ffff99', 'The Ultimate union of <span style=&quot; color: #FF3333; &quot; >Dono</span> and <span style=&quot; color: #33FF33; &quot; >Upo</span>, a katana born from perfect balance. Though it holds unimaginable power, <span style=&quot; color: #0055AA; &quot; >UDi</span> dreads the moment he must call upon it for the <span style=&quot; color: #555555; &quot; >Gray</span>(Sideway) enemy, unlike any other, is a force he prays never to confront.')">
             <img src="Infinos.png" alt="Infino Icon">
         </div>
-       
     </div>
 
     <!-- Description -->
-    <div id="description"></div>
-        <!-- UDI-nomics and Roadmap Boxes -->
+    <div id="description" data-current=""></div>
+
+    <!-- UDI-nomics and Roadmap Boxes -->
     <div class="info-boxes">
         <div class="info-box" onclick="showUDInomics()">
             <h2>Tokenomics</h2>
@@ -316,22 +344,59 @@
     </div>
 
     <!-- Display content here -->
-    <div id="info-content"></div>
+    <div id="info-content" data-current=""></div>
+
 <script>
-  // Katana toggle
+  // fade duration in ms (keep in sync with CSS --fade-duration)
+  const FADE_DURATION = 600;
+
+  // Generic fade-out + clear helper
+  function fadeOutAndClear(container, callback) {
+    const child = container.querySelector('.fade');
+    if (!child) {
+      if (callback) callback();
+      return;
+    }
+    child.classList.remove('show');
+    setTimeout(() => {
+      container.innerHTML = '';
+      if (callback) callback();
+    }, FADE_DURATION);
+  }
+
+  // Generic toggle helper: if same key => fade out; if different => fade out old then fade in new
+  function toggleContent(container, key, htmlContent) {
+    const current = container.dataset.current || '';
+    if (current === key) {
+      // fade out and clear
+      fadeOutAndClear(container, () => container.dataset.current = '');
+      return;
+    }
+
+    if (current && current !== key) {
+      // fade out old, then insert new
+      fadeOutAndClear(container, () => insertNew());
+    } else {
+      insertNew();
+    }
+
+    function insertNew() {
+      container.innerHTML = `<div class="fade content-block">${htmlContent}</div>`;
+      const child = container.querySelector('.fade');
+      // small delay to allow the browser to register the element, then add .show
+      setTimeout(() => child.classList.add('show'), 50);
+      container.dataset.current = key;
+    }
+  }
+
+  // Katana toggle (uses toggleContent)
   function showDescription(title, color, text) {
     const desc = document.getElementById("description");
-    
-    if (desc.dataset.current === title) {
-      desc.innerHTML = "";
-      desc.dataset.current = "";
-    } else {
-      desc.innerHTML = `
-        <h2 style="color:${color}"><b>${title}</b></h2>
-        <p>${text}</p>
-      `;
-      desc.dataset.current = title;
-    }
+    const html = `
+      <h2 style="color:${color}"><b>${title}</b></h2>
+      <p>${text}</p>
+    `;
+    toggleContent(desc, title, html);
   }
 
   // Copy Address
@@ -346,99 +411,43 @@
 
   // UDI-nomics toggle
   function showUDInomics() {
-    const info = document.getElementById("info-content");
-
-    if (info.dataset.current === "Tokenomics") {
-      info.innerHTML = "";
-      info.dataset.current = "";
-    } else {
-      info.innerHTML = `
-        <div class="info-content-two-column">
-          <img src="Tokenomics.png" alt="Tokenomics Pie Chart">
-          <div class="text">
-            <h2 style="color:white"><b>ALLOCATION</b></h2>
-            <p> -Chain Ethereum<br>-<span style="color: #ff266b;">1% Owner</span><br>-<span style="color: #5ef1f4;">...% Marketing,Partners...</span><br>-<span style="color: #ffed00;">...% Airdrop Community</span><br>-<span style="color: #26ff00;">...% Public</span></p>
-          </div>
+    const infoHtml = `
+      <div class="info-content-two-column">
+        <img src="Tokenomics.png" alt="Tokenomics Pie Chart">
+        <div class="text">
+          <h2 style="color:white"><b>ALLOCATION</b></h2>
+          <p> -Chain Ethereum<br>-<span style="color: #ff266b;">1% Owner</span><br>-<span style="color: #5ef1f4;">...% Marketing,Partners...</span><br>-<span style="color: #ffed00;">...% Airdrop Community</span><br>-<span style="color: #26ff00;">...% Public</span></p>
         </div>
-      `;
-      info.dataset.current = "Tokenomics";
-    }
+      </div>
+    `;
+    toggleContent(document.getElementById("info-content"), "Tokenomics", infoHtml);
   }
 
   // Roadmap toggle
   function showRoadmap() {
-    const info = document.getElementById("info-content");
-
-    if (info.dataset.current === "Roadmap") {
-      info.innerHTML = "";
-      info.dataset.current = "";
-    } else {
-      info.innerHTML = `
-        <div class="info-content-two-column">
-          <img src="Roadmap.png" alt="Roadmap">
-          <div class="text">
-            <h2 style="color:white"><b>Roadmap</b></h2>
-            <p>Beyond all memes...</p>
-          </div>
+    const roadmapHtml = `
+      <div class="info-content-two-column">
+        <img src="Roadmap.png" alt="Roadmap">
+        <div class="text">
+          <h2 style="color:white"><b>Roadmap</b></h2>
+          <p>Beyond all memes...</p>
         </div>
-      `;
-      info.dataset.current = "Roadmap";
-    }
+      </div>
+    `;
+    toggleContent(document.getElementById("info-content"), "Roadmap", roadmapHtml);
   }
 
+  // optional: close any open content when clicking outside (uncomment if wanted)
+  // document.addEventListener('click', (e) => {
+  //   const desc = document.getElementById('description');
+  //   const info = document.getElementById('info-content');
+  //   // check if click inside protection etc...
+  // });
+
 </script>
+
 <footer>
   <p>© 2025 UDI. All rights reserved. | contact@updowninfinity.xyz</p>
 </footer>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
