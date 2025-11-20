@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
   <style>
+    * { box-sizing: border-box; }
     body, input, button {
       font-family: 'Special Elite', 'Courier New', monospace !important;
     }
@@ -20,89 +21,112 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       color: white;
+      overflow: hidden;
     }
     .container { text-align: center; }
-    .logo { width: 220px; margin-bottom: 40px; }
-    h1 {
-      font-size: 5.8rem;
-      margin: 0 0 60px 0;
-      letter-spacing: 6px;
-      text-shadow: 5px 5px 0px rgba(0,0,0,0.4);
+
+    .logo {
+      width: 180px;
+      margin-bottom: 50px;
     }
-    .form-group { margin-bottom: 30px; }
-    input {
-      width: 460px;
+
+    .input-wrapper {
+      position: relative;
+      margin: 45px auto;
+      width: 420px;
       max-width: 90vw;
-      padding: 18px 24px;
-      border: 4px solid white;
-      border-radius: 0;
-      font-size: 1.5rem;
-      background: transparent;
+    }
+    .input-wrapper input {
+      width: 100%;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-bottom: 4px solid white;
       color: white;
+      font-size: 1.6rem;
       text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .input-wrapper input::placeholder { color: rgba(255,255,255,0.7); }
+    .input-wrapper input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.25);
+    }
+    .input-wrapper::before {
+      content: "Your X:";
+      position: absolute;
+      left: 50%;
+      top: -28px;
+      transform: translateX(-50%);
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: white;
       letter-spacing: 2px;
     }
-    input::placeholder { color: rgba(255,255,255,0.7); }
-    input:focus { outline: none; background: rgba(255,255,255,0.15); }
+    .input-wrapper.wallet::before { content: "Wallet:"; }
 
     button {
-      margin-top: 40px;
-      padding: 18px 80px;
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #FF8C00;
+      margin-top: 70px;
+      padding: 18px 90px;
       background: white;
+      color: #FF8C00;
       border: none;
       border-radius: 0;
+      font-size: 2.4rem;
+      font-weight: bold;
+      letter-spacing: 5px;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
       transition: all 0.3s;
-      letter-spacing: 4px;
     }
-    button:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    button:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
 
-    .message { margin-top: 40px; font-size: 2rem; display: none; letter-spacing: 3px; }
-    .error-msg { color: #ff3333; }
+    .message {
+      margin-top: 50px;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      display: none;
+    }
+    .error-msg { color: #ff9999; }
     .welcome {
-      font-size: 2.8rem !important;
-      color: white;
-      animation: bounce 1.5s infinite;
+      font-size: 3rem !important;
+      animation: bounce 1.8s infinite;
     }
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-20px)}
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="IMG_1930.gif" alt="UDI Logo" class="logo">
-    <h1>UDI</h1>
-    
-    <div class="form-group">
-      <input type="text" id="twitter" placeholder="Your X: @yourname" />
+    <img src="IMG_1930.gif" alt="UDI" class="logo">   <!-- Thay bằng file GIF của bạn -->
+
+    <div class="input-wrapper">
+      <input type="text" id="twitter" placeholder="@yourname" />
     </div>
-    
-    <div class="form-group">
-      <input type="text" id="wallet" placeholder="Wallet: 0x..." />
+
+    <div class="input-wrapper wallet">
+      <input type="text" id="wallet" placeholder="0x..." />
     </div>
-    
+
     <button id="submitBtn">SUBMIT</button>
-    
+
     <div class="message" id="loading">Submitting...</div>
     <div class="message error-msg" id="error"></div>
     <div class="message welcome" id="welcome">Welcome to the UDIverse!!!</div>
   </div>
 
   <script>
-    // YOUR URL GOOGLE APP SCRIPT
-    const SCRIPT_URL = 'https://script.google.com/macros/s/THAY_URL_CUA_BAN_VAO_DAY/exec';
+    // THAY BẰNG URL GOOGLE APP SCRIPT CỦA BẠN
+    const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_URL_HERE/exec';
 
-    // Check wallet Ethereum correct
     function isValidEthAddress(addr) {
-      return /^0x[a-fA-F0-9]{40}$/.test(addr);
+      return /^0x[a-fA-F0-9]{40}$/i.test(addr);
     }
 
     document.getElementById('submitBtn').addEventListener('click', async () => {
@@ -110,16 +134,16 @@
       let wallet = document.getElementById('wallet').value.trim();
 
       const loading = document.getElementById('loading');
-      const error = document.getElementById('error');
+      const error   = document.getElementById('error');
       const welcome = document.getElementById('welcome');
-      const btn = document.getElementById('submitBtn');
+      const btn     = document.getElementById('submitBtn');
 
-      // Reset notifications
+      // Reset messages
       loading.style.display = error.style.display = welcome.style.display = 'none';
 
       // Validate X handle
       if (!twitter) {
-        error.textContent = 'Nhập X handle đi bro!';
+        error.textContent = 'Enter your X handle';
         error.style.display = 'block';
         return;
       }
@@ -128,22 +152,22 @@
 
       // Validate wallet
       if (!wallet) {
-        error.textContent = 'Nhập wallet nữa!';
+        error.textContent = 'Enter your wallet';
         error.style.display = 'block';
         return;
       }
-      if (!wallet.toLowerCase().startsWith('0x')) {
-        error.textContent = 'Wallet phải bắt đầu bằng 0x';
+      if (!wallet.match(/^0x/i)) {
+        error.textContent = 'Wallet must start with 0x';
         error.style.display = 'block';
         return;
       }
       if (!isValidEthAddress(wallet)) {
-        error.textContent = 'Invalid Wallet Address';
+        error.textContent = 'Invalid wallet address (42 characters required)';
         error.style.display = 'block';
         return;
       }
 
-      // All OK → submit
+      // Submit
       btn.disabled = true;
       loading.style.display = 'block';
 
@@ -151,23 +175,20 @@
         const res = await fetch(SCRIPT_URL, {
           method: 'POST',
           body: JSON.stringify({ 
-            twitter: twitter, 
+            twitter, 
             wallet: wallet.toLowerCase(), 
             timestamp: new Date().toISOString() 
           }),
-          headers: { 'Content-Type': 'text/plain' },
+          headers: { 'Content-Type': 'text/plain' }
         });
-
         const data = await res.json();
         if (data.result === 'success') {
           welcome.style.display = 'block';
           document.getElementById('twitter').value = '';
           document.getElementById('wallet').value = '';
-        } else {
-          throw new Error();
-        }
+        } else throw '';
       } catch (e) {
-        error.textContent = 'Error, Try Again!';
+        error.textContent = 'Network error – try again';
         error.style.display = 'block';
       } finally {
         btn.disabled = false;
