@@ -1,141 +1,146 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whitelist Access</title>
 
-<title>UDI Whitelist</title>
-
-<!-- FAVICON -->
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="shortcut icon" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/favicon.png">
-
-<!-- GOOGLE FONT: SPECIAL ELITE -->
+<!-- Font Special Elite -->
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
+<!-- Favicon -->
+<link rel="icon" href="favicon.ico">
+
 <style>
-  body {
-    background: #ff8c00;
-    font-family: "Special Elite", monospace;
-    font-weight: 700; /* BOLD */
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 40px;
-  }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Special Elite', monospace;
+        background: url('your-background-image.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
 
-  .udi-gif {
-    width: 260px;
-    height: auto;
-    image-rendering: crisp-edges;
-    margin-bottom: 20px;
-  }
+    /* GIF layer */
+    .gif-bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+    }
 
-  .form-box {
-    width: 90%;
-    max-width: 420px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 18px;
-    padding: 22px;
-    backdrop-filter: blur(6px);
-  }
+    /* Password overlay */
+    #password-screen {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 1.15em;
-  }
+    #password-screen input {
+        padding: 12px;
+        font-size: 20px;
+        border: 2px solid white;
+        border-radius: 4px;
+        background: black;
+        color: white;
+        text-align: center;
+        font-family: 'Special Elite';
+        margin-bottom: 20px;
+    }
 
-  input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    margin-bottom: 18px;
-    font-family: "Special Elite", monospace;
-    font-weight: 700;
-  }
+    #password-screen button {
+        padding: 10px 25px;
+        font-size: 20px;
+        background: white;
+        border: none;
+        cursor: pointer;
+        font-family: 'Special Elite';
+    }
 
-  button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.2em;
-    cursor: pointer;
-    font-family: "Special Elite", monospace;
-    font-weight: 700;
-    background: #fff;
-    color: #ff8c00;
-  }
+    /* Main form */
+    #main-content {
+        display: none;
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        padding-top: 100px;
+    }
 
-  button:hover {
-    opacity: .85;
-  }
+    .form-box {
+        background: rgba(0,0,0,0.6);
+        padding: 30px;
+        width: 300px;
+        margin: auto;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
 
-  .msg {
-    margin-top: 12px;
-    text-align: center;
-    font-size: 1.05em;
-  }
+    .form-box input {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid white;
+        background: transparent;
+        color: white;
+        font-size: 16px;
+        font-family: 'Special Elite';
+    }
+
+    .form-box button {
+        width: 100%;
+        padding: 10px;
+        background: white;
+        color: black;
+        font-family: 'Special Elite';
+        cursor: pointer;
+        font-size: 18px;
+    }
+
 </style>
 </head>
 
 <body>
 
-  <!-- GIF UDI  -->
-  <img src="assets/udi.gif" class="udi-gif" alt="UDI Animation">
+<!-- GIF background -->
+<img src="your-gif-here.gif" class="gif-bg">
 
-  <!-- FORM -->
-  <div class="form-box">
-    <label>X (Twitter)</label>
-    <input id="xHandle" type="text" placeholder="@yourX">
+<!-- Password Screen -->
+<div id="password-screen">
+    <input type="password" id="passInput" placeholder="Enter Password">
+    <button onclick="checkPass()">Enter</button>
+</div>
 
-    <label>Wallet (ETH)</label>
-    <input id="wallet" type="text" placeholder="0x...">
-
-    <button id="submitBtn">Submit</button>
-    <div class="msg" id="msg"></div>
-  </div>
+<!-- Main Form -->
+<div id="main-content">
+    <div class="form-box">
+        <h2 style="color:white;">Whitelist Form</h2>
+        <form action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
+            <input type="text" name="data[x]" placeholder="Your X (Twitter) Profile" required>
+            <input type="text" name="data[wallet]" placeholder="Your ETH Wallet" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
 
 <script>
-const ENDPOINT = "YOUR_GOOGLE_APPS_SCRIPT_URL"; 
-// thay bằng URL Apps Script của bạn
-
-document.getElementById('submitBtn').addEventListener('click', async () => {
-  const x = document.getElementById('xHandle').value.trim();
-  const wallet = document.getElementById('wallet').value.trim();
-  const msg = document.getElementById('msg');
-
-  if (!x || !wallet) {
-    msg.textContent = "Điền đủ X + Wallet nhé.";
-    return;
-  }
-
-  msg.textContent = "Đang gửi...";
-
-  try {
-    const res = await fetch(ENDPOINT, {
-      method: "POST",
-      body: JSON.stringify({ x, wallet }),
-      headers: { "Content-Type": "application/json" }
-    });
-
-    const j = await res.json();
-    msg.textContent = (j.status === "ok")
-      ? "Thành công — Welcome to UDI!"
-      : "Lỗi: " + j.message;
-
-  } catch (err) {
-    msg.textContent = "Lỗi mạng: " + err;
-  }
-});
+function checkPass() {
+    const correctPass = "udi2025"; // 🔴 ĐỔI PASSWORD Ở ĐÂY
+    const userInput = document.getElementById("passInput").value;
+    
+    if (userInput === correctPass) {
+        document.getElementById("password-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+    } else {
+        alert("Wrong password!");
+    }
+}
 </script>
 
 </body>
