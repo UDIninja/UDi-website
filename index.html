@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>$UDI</title>
+<title>UDI</title>
 
 <!-- Font Special Elite -->
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
@@ -18,28 +18,32 @@
         font-family: 'Special Elite', monospace;
         background: url('background.png') no-repeat center center fixed;
         background-size: cover;
+        overflow-x: hidden;
     }
 
-    .gif-bg {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* PASSWORD OVERLAY */
+    /* PASSWORD SCREEN */
     #password-screen {
         position: fixed;
         top: 0; left: 0;
         width: 100%; height: 100%;
-        background: rgba(0,0,0,0.65);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 10;
         backdrop-filter: blur(3px);
+    }
+
+    /* GIF trên cùng */
+    #password-screen .gif-top {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: auto;
+        pointer-events: none;
+        z-index: 1;
     }
 
     #password-screen input {
@@ -54,6 +58,8 @@
         text-align: center;
         margin-bottom: 20px;
         width: 250px;
+        position: relative;
+        z-index: 2;
         backdrop-filter: blur(6px);
     }
 
@@ -66,6 +72,8 @@
         border-radius: 12px;
         cursor: pointer;
         font-family: 'Special Elite';
+        position: relative;
+        z-index: 2;
         backdrop-filter: blur(4px);
     }
 
@@ -79,6 +87,7 @@
     }
 
     .form-box {
+        position: relative;
         padding: 30px;
         width: 300px;
         margin: auto;
@@ -86,6 +95,17 @@
         border-radius: 15px;
         background: rgba(0,0,0,0.4);
         backdrop-filter: blur(4px);
+    }
+
+    .form-box .gif-top {
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: auto;
+        pointer-events: none;
+        z-index: 1;
     }
 
     .form-box input {
@@ -99,6 +119,8 @@
         outline: none;
         font-size: 16px;
         font-family: 'Special Elite';
+        position: relative;
+        z-index: 2;
         backdrop-filter: blur(6px);
     }
 
@@ -112,25 +134,31 @@
         font-size: 18px;
         cursor: pointer;
         font-family: 'Special Elite';
+        position: relative;
+        z-index: 2;
     }
 
-    /* Success text */
+    .form-box button:disabled {
+        background: rgba(255,255,255,0.1);
+        cursor: not-allowed;
+    }
+
     #success-text {
         margin-top: 15px;
         color: #00ffea;
         font-size: 18px;
         display: none;
+        position: relative;
+        z-index: 2;
     }
 </style>
 </head>
 
 <body>
 
-<!-- GIF BACKGROUND -->
-<img src="IMG_1930.gif" class="gif-bg">
-
-<!-- PASSWORD FIRST -->
+<!-- PASSWORD SCREEN -->
 <div id="password-screen">
+    <img src="your-password-gif.gif" class="gif-top" alt="Password GIF">
     <input type="password" id="passInput" placeholder="Enter Password">
     <button onclick="checkPass()">Enter</button>
 </div>
@@ -138,22 +166,21 @@
 <!-- MAIN FORM -->
 <div id="main-content">
     <div class="form-box">
+        <img src="IMG_1930.gif" class="gif-top" alt="Form GIF">
         <h2 style="color:white;">Whitelist Form</h2>
-
         <form id="whitelistForm" action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
             <input type="text" id="xInput" name="data[x]" placeholder="Your X (Twitter) Profile" required>
             <input type="text" id="walletInput" name="data[wallet]" placeholder="Your ETH Wallet" required>
-            <button type="submit">Submit</button>
+            <button type="submit" id="submitBtn">Submit</button>
         </form>
-
-        <div id="success-text">Success, welcome UDIverse — good luck!</div>
+        <div id="success-text">Welcome UDI-verse<br>Good Luck!</div>
     </div>
 </div>
 
 <script>
-/* Password check */
+/* PASSWORD CHECK */
 function checkPass() {
-    const correctPass = "udi2025";  // đổi mật khẩu ở đây
+    const correctPass = "udi2025";
     const input = document.getElementById("passInput").value;
 
     if (input === correctPass) {
@@ -164,27 +191,36 @@ function checkPass() {
     }
 }
 
-/* Form validation & submit */
+/* FORM VALIDATION & ANTI-SPAM */
+let failCount = 0;
+const maxFails = 3;
+const lockTime = 10000;
+
 document.getElementById("whitelistForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     const xInput = document.getElementById("xInput").value.trim();
     const walletInput = document.getElementById("walletInput").value.trim();
+    const submitBtn = document.getElementById("submitBtn");
 
-    // X profile phải bắt đầu bằng @
+    // Validate X
     if (!xInput.startsWith("@")) {
         alert("X profile must start with @");
+        failCount++;
+        checkLock();
         return;
     }
 
-    // ETH wallet bắt đầu 0x và có 40 ký tự hex
+    // Validate ETH
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
     if (!ethRegex.test(walletInput)) {
         alert("Invalid ETH wallet address");
+        failCount++;
+        checkLock();
         return;
     }
 
-    // Nếu hợp lệ thì gửi form
+    // Submit
     const form = this;
     fetch(form.action, {
         method: "POST",
@@ -193,12 +229,25 @@ document.getElementById("whitelistForm").addEventListener("submit", function(e){
     .then(() => {
         document.getElementById("success-text").style.display = "block";
         form.reset();
+        failCount = 0;
     })
     .catch(err => {
         alert("Error submitting form");
         console.error(err);
     });
 });
+
+function checkLock() {
+    const submitBtn = document.getElementById("submitBtn");
+    if (failCount >= maxFails) {
+        submitBtn.disabled = true;
+        alert(`Too many failed attempts! Please wait ${lockTime/1000} seconds.`);
+        setTimeout(() => {
+            failCount = 0;
+            submitBtn.disabled = false;
+        }, lockTime);
+    }
+}
 </script>
 
 </body>
