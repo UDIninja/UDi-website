@@ -15,7 +15,6 @@ body {
     font-family: 'Special Elite', monospace;
     background: url('background.png') no-repeat center center fixed;
     background-size: cover;
-    overflow-x: hidden;
     color: white;
 }
 
@@ -52,7 +51,6 @@ body {
     font-size: 20px;
     color: white;
     outline: none;
-    z-index: 2;
     text-align: center;
     font-family: 'Special Elite', monospace;
     width: 250px;
@@ -76,8 +74,7 @@ body {
     color: white;
 }
 
-#main-content input,
-#main-content button {
+#main-content input {
     background: transparent;
     border: none;
     border-bottom: 1px solid rgba(255,255,255,0.5);
@@ -86,41 +83,37 @@ body {
     font-size: 18px;
     color: white;
     outline: none;
-    text-align: center;
-    font-family: 'Special Elite', monospace;
-}
-
-#main-content input::placeholder {
-    color: rgba(255,255,255,0.5);
-}
-
-/* X input */
-#xInput {
-    width: 250px;
-    text-align: center;
-}
-
-/* Wallet input đủ rộng, monospace, align left để paste dài không bị che */
-#walletInput {
-    width: 420px;
-    max-width: 90%;
     text-align: left;
     font-family: 'Special Elite', monospace;
+    width: 400px;      /* đủ dài cho wallet */
+    max-width: 90%;
 }
 
-/* Button */
-#main-content button {
+/* Row chứa wallet + submit */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 400px;
+    max-width: 90%;
+}
+
+#walletInput {
+    flex: 1;
+    margin-right: 10px;
+    font-family: 'Special Elite', monospace;
+}
+
+#submitBtn {
+    padding: 5px 15px;
     cursor: pointer;
-    font-size: 18px;
-    margin-top: 15px;
-    color: white;
-    text-transform: uppercase;
-    width: 250px;
+    font-family: 'Special Elite', monospace;
 }
 
-#main-content button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+/* Placeholder mờ */
+#main-content input::placeholder {
+    color: rgba(255,255,255,0.5);
 }
 
 #success-text {
@@ -145,13 +138,18 @@ body {
 <div id="main-content">
     <img src="IMG_1930.gif" class="gif-top" alt="Form GIF">
     <h2>Whitelist Form</h2>
+    
     <form id="whitelistForm" action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
-        <!-- Dòng X -->
+        <!-- X Profile -->
         <input type="text" id="xInput" name="data[x]" placeholder="@X Profile" required>
-        <!-- Dòng Wallet ngay dưới, đủ rộng -->
-        <input type="text" id="walletInput" name="data[wallet]" placeholder="0xETH Wallet" required>
-        <button type="submit" id="submitBtn">Submit</button>
+
+        <!-- Wallet + Submit ngang hàng -->
+        <div class="form-row">
+            <input type="text" id="walletInput" name="data[wallet]" placeholder="0xETH Wallet" required>
+            <button type="submit" id="submitBtn">Submit</button>
+        </div>
     </form>
+
     <div id="success-text">Success, welcome UDIverse — good luck!</div>
 </div>
 
@@ -196,7 +194,6 @@ document.getElementById("whitelistForm").addEventListener("submit", function(e){
         return;
     }
 
-    // Submit
     const form = this;
     fetch(form.action, {
         method: "POST",
