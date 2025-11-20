@@ -8,149 +8,108 @@
 <!-- Font Special Elite -->
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
-<!-- Favicon -->
-<link rel="icon" href="favicon.ico">
-
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Special Elite', monospace;
-        background: url('background.png') no-repeat center center fixed;
-        background-size: cover;
-        overflow-x: hidden;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Special Elite', monospace;
+    background: url('background.png') no-repeat center center fixed;
+    background-size: cover;
+    overflow-x: hidden;
+    color: white;
+}
 
-    /* PASSWORD SCREEN */
-    #password-screen {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-        backdrop-filter: blur(3px);
-    }
+/* GIF trên cùng */
+.gif-top {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+}
 
-    /* GIF trên cùng */
-    #password-screen .gif-top {
-        position: absolute;
-        top: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 200px;
-        height: auto;
-        pointer-events: none;
-        z-index: 1;
-    }
+/* PASSWORD SCREEN */
+#password-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
 
-    #password-screen input {
-        padding: 12px;
-        font-size: 20px;
-        background: rgba(255,255,255,0.1);
-        color: white;
-        border: 2px solid white;
-        border-radius: 12px;
-        outline: none;
-        font-family: 'Special Elite';
-        text-align: center;
-        margin-bottom: 20px;
-        width: 250px;
-        position: relative;
-        z-index: 2;
-        backdrop-filter: blur(6px);
-    }
+#password-screen input,
+#password-screen button {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    margin: 10px 0;
+    font-size: 20px;
+    color: white;
+    outline: none;
+    z-index: 2;
+    text-align: center;
+}
 
-    #password-screen button {
-        padding: 10px 25px;
-        font-size: 20px;
-        background: rgba(255,255,255,0.2);
-        color: white;
-        border: 2px solid white;
-        border-radius: 12px;
-        cursor: pointer;
-        font-family: 'Special Elite';
-        position: relative;
-        z-index: 2;
-        backdrop-filter: blur(4px);
-    }
+#password-screen input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
 
-    /* MAIN FORM */
-    #main-content {
-        display: none;
-        position: relative;
-        z-index: 5;
-        text-align: center;
-        padding-top: 100px;
-    }
+/* MAIN FORM */
+#main-content {
+    display: none;
+    text-align: center;
+    padding-top: 100px;
+    position: relative;
+    z-index: 5;
+}
 
-    .form-box {
-        position: relative;
-        padding: 30px;
-        width: 300px;
-        margin: auto;
-        border: 2px solid rgba(255,255,255,0.7);
-        border-radius: 15px;
-        background: rgba(0,0,0,0.4);
-        backdrop-filter: blur(4px);
-    }
+#main-content h2 {
+    margin-bottom: 20px;
+    color: white;
+}
 
-    .form-box .gif-top {
-        position: absolute;
-        top: -80px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 150px;
-        height: auto;
-        pointer-events: none;
-        z-index: 1;
-    }
+#main-content input,
+#main-content button {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    margin: 10px 0;
+    padding: 5px 0;
+    font-size: 18px;
+    color: white;
+    outline: none;
+    text-align: center;
+}
 
-    .form-box input {
-        width: 100%;
-        margin-bottom: 15px;
-        padding: 12px;
-        background: rgba(255,255,255,0.1);
-        color: white;
-        border: 2px solid white;
-        border-radius: 12px;
-        outline: none;
-        font-size: 16px;
-        font-family: 'Special Elite';
-        position: relative;
-        z-index: 2;
-        backdrop-filter: blur(6px);
-    }
+#main-content input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
 
-    .form-box button {
-        width: 100%;
-        padding: 12px;
-        background: rgba(255,255,255,0.2);
-        border: 2px solid white;
-        border-radius: 12px;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        font-family: 'Special Elite';
-        position: relative;
-        z-index: 2;
-    }
+#main-content button {
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 10px;
+    color: white;
+    text-transform: uppercase;
+}
 
-    .form-box button:disabled {
-        background: rgba(255,255,255,0.1);
-        cursor: not-allowed;
-    }
+#main-content button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
-    #success-text {
-        margin-top: 15px;
-        color: #00ffea;
-        font-size: 18px;
-        display: none;
-        position: relative;
-        z-index: 2;
-    }
+#success-text {
+    margin-top: 15px;
+    color: #00ffea;
+    font-size: 18px;
+    display: none;
+}
 </style>
 </head>
 
@@ -158,23 +117,21 @@
 
 <!-- PASSWORD SCREEN -->
 <div id="password-screen">
-    <img src="your-password-gif.gif" class="gif-top" alt="Password GIF">
+    <img src="IMG_1930.gif" class="gif-top" alt="Password GIF">
     <input type="password" id="passInput" placeholder="Enter Password">
     <button onclick="checkPass()">Enter</button>
 </div>
 
 <!-- MAIN FORM -->
 <div id="main-content">
-    <div class="form-box">
-        <img src="IMG_1930.gif" class="gif-top" alt="Form GIF">
-        <h2 style="color:white;">Whitelist Form</h2>
-        <form id="whitelistForm" action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
-            <input type="text" id="xInput" name="data[x]" placeholder="Your X (Twitter) Profile" required>
-            <input type="text" id="walletInput" name="data[wallet]" placeholder="Your ETH Wallet" required>
-            <button type="submit" id="submitBtn">Submit</button>
-        </form>
-        <div id="success-text">Welcome UDI-verse<br>Good Luck!</div>
-    </div>
+    <img src="IMG_1930.gif" class="gif-top" alt="Form GIF">
+    <h2>Whitelist Form</h2>
+    <form id="whitelistForm" action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
+        <input type="text" id="xInput" name="data[x]" placeholder="@X Profile" required>
+        <input type="text" id="walletInput" name="data[wallet]" placeholder="0xETH Wallet" required>
+        <button type="submit" id="submitBtn">Submit</button>
+    </form>
+    <div id="success-text">Success, welcome UDIverse — good luck!</div>
 </div>
 
 <script>
@@ -203,7 +160,6 @@ document.getElementById("whitelistForm").addEventListener("submit", function(e){
     const walletInput = document.getElementById("walletInput").value.trim();
     const submitBtn = document.getElementById("submitBtn");
 
-    // Validate X
     if (!xInput.startsWith("@")) {
         alert("X profile must start with @");
         failCount++;
@@ -211,7 +167,6 @@ document.getElementById("whitelistForm").addEventListener("submit", function(e){
         return;
     }
 
-    // Validate ETH
     const ethRegex = /^0x[a-fA-F0-9]{40}$/;
     if (!ethRegex.test(walletInput)) {
         alert("Invalid ETH wallet address");
