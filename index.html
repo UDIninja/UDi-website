@@ -1,453 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UDI</title>
-    <link rel="icon" type="image/png" href="UDifavicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-    <style>
-        :root {
-          --fade-duration: 600ms; /* chỉnh tốc độ ở đây */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whitelist Access</title>
 
-        body {
-            background-color: #fd8f00;
-            background: url('background.png') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            font-weight: Bold;
-            font-family: Special Elite, cursive;
-            text-align: center;
-            padding-bottom: 60px;
-        }
-        /* Contract Address Section */
-        .contract-container {
-          margin-top: 5px;
-          display: inline-flex;
-          align-items: center;
-          gap: 25px;
-          background: rgba(255,255,255,0.1);
-          padding: 8px 15px;
-          border-radius: 8px;
-          font-family: Special Elite, cursive; 
-        }
-        .contract-address {
-          font-size: 22px;
-          word-break: break-all;
-        }
-        .copy-btn {
-          background: white;
-          color: #fd8f00;
-          border: none;
-          padding: 5px 10px;
-          cursor: pointer;
-          font-weight: bold;
-          border-radius: 5px;
-          transition: 0.3s;
-          font-family: Special Elite, cursive; 
-        }
-        .copy-btn:hover {
-          background: #eee;
-        }
-        .copied {
-          color: #00ff66;
-          font-size: 14px;
-          margin-left: 10px;
-          display: none;
-          font-family: Special Elite, cursive; 
-        }
+<!-- Font Special Elite -->
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
-        /* Social section */
-        .social-icons {
-          position: fixed;
-          top: 15%;
-          transform: translateY(-50%);
-          display: flex;
-          flex-direction: column;
-          gap: 10px; 
-          z-index: 999;
-        }
+<!-- Favicon -->
+<link rel="icon" href="favicon.ico">
 
-        .social-icons.left {
-          left: 35px; 
-        }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Special Elite', monospace;
+        background: url('your-background-image.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
 
-        .social-icons.right {
-          right: 35px; 
-        }
+    /* GIF layer */
+    .gif-bg {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+    }
 
-        .social-icons img {
-          width: 45px; 
-          height: 45px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.2);
-          padding: 6px;
-          transition: 1s;
-        }
+    /* Password overlay */
+    #password-screen {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
 
-        .social-icons img:hover {
-          background: rgba(255,255,255,0.3);
-          transform: scale(1.2);
-          box-shadow: 0 0 12px #ffffff; 
-        }
+    #password-screen input {
+        padding: 12px;
+        font-size: 20px;
+        border: 2px solid white;
+        border-radius: 4px;
+        background: black;
+        color: white;
+        text-align: center;
+        font-family: 'Special Elite';
+        margin-bottom: 20px;
+    }
 
-        footer {
-            position: static;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
-            font-size: 12px;
-            color: white;
-            text-align: center;
-            background: transparent;
-        }
+    #password-screen button {
+        padding: 10px 25px;
+        font-size: 20px;
+        background: white;
+        border: none;
+        cursor: pointer;
+        font-family: 'Special Elite';
+    }
 
-        /* Logo */
-        .logo {
-            margin-top: 20px;
-        }
-        .logo img {
-            width: 300px;
-            height: 300px;
-        }
+    /* Main form */
+    #main-content {
+        display: none;
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        padding-top: 100px;
+    }
 
-        /* Whitepaper title */
-        h1 {
-            margin-top: 20px;
-            font-size: 28px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
+    .form-box {
+        background: rgba(0,0,0,0.6);
+        padding: 30px;
+        width: 300px;
+        margin: auto;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
 
-        /* Circles row */
-        .circles {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-        }
+    .form-box input {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid white;
+        background: transparent;
+        color: white;
+        font-size: 16px;
+        font-family: 'Special Elite';
+    }
 
-        .circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 5px solid transparent;
-            transition: 1s;
-        }
+    .form-box button {
+        width: 100%;
+        padding: 10px;
+        background: white;
+        color: black;
+        font-family: 'Special Elite';
+        cursor: pointer;
+        font-size: 18px;
+    }
 
-        /* Colors */
-        .blue { border-color: #00aaff; }
-        .blue:hover { box-shadow: 0 0 20px #00aaff; }
-
-        .green { border-color: #00ff66; }
-        .green:hover { box-shadow: 0 0 20px #00ff66; }
-
-        .red { border-color: #ff4444; }
-        .red:hover { box-shadow: 0 0 20px #ff4444; }
-
-        .yellow { border-color: #ffcc00; }
-        .yellow:hover { box-shadow: 0 0 20px #ffcc00; }
-
-        /* Circle images */
-        .circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Description area */
-        #description {
-            margin-top: 40px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            min-height: 1px; /* giữ layout */
-        }
-        #description h2 {
-            margin-bottom: 10px;
-            max-width: 1000px;
-            text-align: center;
-        }
-        #description p {
-            color: white;
-            line-height: 1.6;
-            text-align: center;
-        }
-
-        /* Info Boxes container */
-        .info-boxes {
-            display: flex;
-            justify-content: center;
-            gap: 90px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .info-box {
-            width: 200px;
-            height: 50px;
-            border: 5px solid white;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 1s;
-        }
-
-        .info-box:hover {
-            background: rgba(255,255,255,0.1);
-            transform: scale(1.05);
-        }
-
-        .info-box h2 {
-            font-size: 30px;
-            color: white;
-            margin: 0;
-        }
-
-        #info-content {
-            margin-top: 40px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            min-height: 1px;
-        }
-
-        #info-content img {
-            max-width: 250px;
-            height: auto;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
-
-        #info-content p {
-            color: white;
-            line-height: 1.6;
-        }
-
-        /* Container 2 columns */
-        .info-content-two-column {
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          gap: 80px;
-          flex-wrap: wrap; 
-          text-align: left;
-        }
-
-        /* left column */
-        .info-content-two-column img {
-          max-width: 250px;
-          height: auto;
-          border-radius: 10px;
-        }
-
-        /* right column */
-        .info-content-two-column .text {
-          max-width: 600px;
-          color: white;
-          line-height: 1.6;
-        }
-
-        /* --- Fade animation helper --- */
-        .fade {
-          opacity: 0;
-          transform: translateY(8px);
-          transition: opacity var(--fade-duration) ease, transform var(--fade-duration) ease;
-          will-change: opacity, transform;
-        }
-        .fade.show {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        /* small helper so content width looks correct */
-        .content-block {
-          display: inline-block;
-          max-width: 1000px;
-          text-align: center;
-        }
-    </style>
+</style>
 </head>
+
 <body>
-<!-- Contract Address Section -->
-    <div class="contract-container">
-      <span class="contract-address" id="contractAddress">CA Coming Soon...</span>
-      <button class="copy-btn" onclick="copyAddress()">Copy</button>
-      <span class="copied" id="copiedText">Copied!</span>
-    </div>
 
-    <!-- Logo -->
-    <div class="logo">
-        <img src="UDiavatar.png" alt="UDI Logo">
-    </div>
+<!-- GIF background -->
+<img src="your-gif-here.gif" class="gif-bg">
 
-    <!-- Social Icons Left -->
-<div class="social-icons left">
-  <a href="https://opensea.io" target="_blank">
-    <img src="Opensea.png" alt="Opensea">
-  </a>
-  <a href="https://x.com/updowninfinity" target="_blank">
-    <img src="x.png" alt="X">
-  </a>
+<!-- Password Screen -->
+<div id="password-screen">
+    <input type="password" id="passInput" placeholder="Enter Password">
+    <button onclick="checkPass()">Enter</button>
 </div>
 
-<!-- Social Icons Right -->
-<div class="social-icons right">
-  <a href="https://dexscreener.com/" target="_blank">
-    <img src="Dexscreener.png" alt="Dexscreener">
-  </a>
-  <a href="https://www.dextools.io" target="_blank">
-    <img src="Dextools.png" alt="Dextools">
-  </a>
+<!-- Main Form -->
+<div id="main-content">
+    <div class="form-box">
+        <h2 style="color:white;">Whitelist Form</h2>
+        <form action="https://sheetdb.io/api/v1/YOUR_SHEET_ENDPOINT" method="POST">
+            <input type="text" name="data[x]" placeholder="Your X (Twitter) Profile" required>
+            <input type="text" name="data[wallet]" placeholder="Your ETH Wallet" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
-
-    <!-- Whitepaper Title -->
-    <h1><span style="color: grey;">Blademaster of Cryptoverse</span></h1>
-
-    <!-- Circles Row -->
-    <div class="circles">
-        <div class="circle green" onclick="showDescription('Upo', '#00ff66', 'The green katana wielded with flawless mastery by <span style=&quot; color: #0055AA; &quot; >UDi</span>. Countless <span style=&quot; color: #ff4444; &quot; >Red</span> foes have fallen by its edge, shattered millions of times.')">
-            <img src="Upos.png" alt="Upo Icon">
-        </div>
-         <div class="circle red" onclick="showDescription('Dono', '#ff4444', 'The forbidden red katana, said to be forged for a single purpose, to strike down anything <span style=&quot; color: #00ff66; &quot; >Green</span>. Legends whisper that no one has ever seen <span style=&quot; color: #0055AA; &quot; >UDi</span> draw this blade, not even once.')">
-            <img src="Donos.png" alt="Dono Icon">
-        </div>
-        <div class="circle yellow" onclick="showDescription('Infino', '#ffff99', 'The Ultimate union of <span style=&quot; color: #FF3333; &quot; >Dono</span> and <span style=&quot; color: #33FF33; &quot; >Upo</span>, a katana born from perfect balance. Though it holds unimaginable power, <span style=&quot; color: #0055AA; &quot; >UDi</span> dreads the moment he must call upon it for the <span style=&quot; color: #555555; &quot; >Gray</span>(Sideway) enemy, unlike any other, is a force he prays never to confront.')">
-            <img src="Infinos.png" alt="Infino Icon">
-        </div>
-    </div>
-
-    <!-- Description -->
-    <div id="description" data-current=""></div>
-
-    <!-- UDI-nomics and Roadmap Boxes -->
-    <div class="info-boxes">
-        <div class="info-box" onclick="showUDInomics()">
-            <h2>Tokenomics</h2>
-        </div>
-        <div class="info-box" onclick="showRoadmap()">
-            <h2>Roadmap</h2>
-        </div>
-    </div>
-
-    <!-- Display content here -->
-    <div id="info-content" data-current=""></div>
 
 <script>
-  // fade duration in ms (keep in sync with CSS --fade-duration)
-  const FADE_DURATION = 600;
-
-  // Generic fade-out + clear helper
-  function fadeOutAndClear(container, callback) {
-    const child = container.querySelector('.fade');
-    if (!child) {
-      if (callback) callback();
-      return;
-    }
-    child.classList.remove('show');
-    setTimeout(() => {
-      container.innerHTML = '';
-      if (callback) callback();
-    }, FADE_DURATION);
-  }
-
-  // Generic toggle helper: if same key => fade out; if different => fade out old then fade in new
-  function toggleContent(container, key, htmlContent) {
-    const current = container.dataset.current || '';
-    if (current === key) {
-      // fade out and clear
-      fadeOutAndClear(container, () => container.dataset.current = '');
-      return;
-    }
-
-    if (current && current !== key) {
-      // fade out old, then insert new
-      fadeOutAndClear(container, () => insertNew());
+function checkPass() {
+    const correctPass = "udi2025"; // 🔴 ĐỔI PASSWORD Ở ĐÂY
+    const userInput = document.getElementById("passInput").value;
+    
+    if (userInput === correctPass) {
+        document.getElementById("password-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
     } else {
-      insertNew();
+        alert("Wrong password!");
     }
-
-    function insertNew() {
-      container.innerHTML = `<div class="fade content-block">${htmlContent}</div>`;
-      const child = container.querySelector('.fade');
-      // small delay to allow the browser to register the element, then add .show
-      setTimeout(() => child.classList.add('show'), 50);
-      container.dataset.current = key;
-    }
-  }
-
-  // Katana toggle (uses toggleContent)
-  function showDescription(title, color, text) {
-    const desc = document.getElementById("description");
-    const html = `
-      <h2 style="color:${color}"><b>${title}</b></h2>
-      <p>${text}</p>
-    `;
-    toggleContent(desc, title, html);
-  }
-
-  // Copy Address
-  function copyAddress() {
-    const address = document.getElementById("contractAddress").textContent;
-    navigator.clipboard.writeText(address).then(() => {
-      const copied = document.getElementById("copiedText");
-      copied.style.display = "inline";
-      setTimeout(() => copied.style.display = "none", 2000);
-    });
-  }
-
-  // UDI-nomics toggle
-  function showUDInomics() {
-    const infoHtml = `
-      <div class="info-content-two-column">
-        <img src="Tokenomic.png" alt="Tokenomics Pie Chart">
-        <div class="text">
-          <h2 style="color:white"><b>$UDI</b></h2>
-          <p> -<span style="color: #5ef1f4;">Marketing,Partners...</span><br>-<span style="color: #ffed00;">Airdrop</span><br>-<span style="color: #26ff00;">Open Market</span><br>-Team</p>
-        </div>
-      </div>
-    `;
-    toggleContent(document.getElementById("info-content"), "Tokenomics", infoHtml);
-  }
-
-  // Roadmap toggle
-  function showRoadmap() {
-    const roadmapHtml = `
-      <div class="info-content-two-column">
-        <img src="Roadmap.png" alt="Roadmap">
-        <div class="text">
-          <h2 style="color:white"><b>ROADMAP</b></h2>
-          <p>-UDi's NFT Launch<br>-Airdrop $UDI<br>-Beyond all<br>-More Coming Soon in 2026...</p>
-        </div>
-      </div>
-    `;
-    toggleContent(document.getElementById("info-content"), "Roadmap", roadmapHtml);
-  }
-
-  // optional: close any open content when clicking outside (uncomment if wanted)
-  // document.addEventListener('click', (e) => {
-  //   const desc = document.getElementById('description');
-  //   const info = document.getElementById('info-content');
-  //   // check if click inside protection etc...
-  // });
-
+}
 </script>
 
-<footer>
-  <p>© 2025 UDI. All rights reserved. | contact@updowninfinity.xyz</p>
-</footer>
 </body>
 </html>
