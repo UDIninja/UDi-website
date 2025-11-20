@@ -51,7 +51,7 @@
     .input-wrapper input::placeholder { color: rgba(255,255,255,0.7); }
     .input-wrapper input:focus {
       outline: none;
-      background: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.1);
     }
     .input-wrapper::before {
       content: "Your X:";
@@ -68,14 +68,14 @@
 
     button {
       margin-top: 10px;
-      padding: 12px 60px;
-      background: rgba(255,255,255,0.25);
+      padding: 12px 45px;
+      background: rgba(255,255,255,0.1);
       color: white;
       border: none;
       border-radius: 50px;
       font-size: 2.0rem;
       font-weight: bold;
-      letter-spacing: 2.5px;
+      letter-spacing: 4px;
       cursor: pointer;
       box-shadow: none;
       transition: all 0.3s;
@@ -106,25 +106,25 @@
 </head>
 <body>
   <div class="container">
-    <img src="IMG_1930.gif" alt="UDI" class="logo">   <!-- Thay bằng file GIF của bạn -->
+    <img src="IMG_1930.gif" alt="UDI" class="logo">
 
     <div class="input-wrapper">
-      <input type="text" id="twitter" placeholder="@yourname" />
+      <input type="text" id="twitter" placeholder="@..." />
     </div>
 
     <div class="input-wrapper wallet">
       <input type="text" id="wallet" placeholder="0x..." />
     </div>
 
-    <button id="submitBtn">SUBMIT</button>
+    <button id="submitBtn">Submit</button>
 
     <div class="message" id="loading">Submitting...</div>
     <div class="message error-msg" id="error"></div>
-    <div class="message welcome" id="welcome">Welcome to the UDIverse!!!</div>
+    <div class="message welcome" id="welcome">Success!!!</div>
   </div>
 
   <script>
-    // THAY BẰNG URL GOOGLE APP SCRIPT CỦA BẠN
+    // URL GOOGLE SCRIPT
     const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_URL_HERE/exec';
 
     function isValidEthAddress(addr) {
@@ -154,7 +154,7 @@
 
       // Validate wallet
       if (!wallet) {
-        error.textContent = 'Enter your wallet';
+        error.textContent = 'Enter your ETH wallet';
         error.style.display = 'block';
         return;
       }
@@ -164,7 +164,7 @@
         return;
       }
       if (!isValidEthAddress(wallet)) {
-        error.textContent = 'Invalid wallet address (42 characters required)';
+        error.textContent = 'Invalid Wallet Address';
         error.style.display = 'block';
         return;
       }
