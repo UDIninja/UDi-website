@@ -54,7 +54,7 @@
       background: rgba(255,255,255,0.25);
     }
     .input-wrapper::before {
-      content: "Your X:";
+      content: "Your X(Twitter):";
       position: absolute;
       left: 50%;
       top: -28px;
@@ -67,7 +67,7 @@
     .input-wrapper.wallet::before { content: "Wallet:"; }
 
     button {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 12px 60px;
       background: rgba(255,255,255,0.25);
       color: white;
@@ -143,7 +143,7 @@
 
       // Validate X handle
       if (!twitter) {
-        error.textContent = 'Enter your X handle';
+        error.textContent = 'Enter your X(Twitter)';
         error.style.display = 'block';
         return;
       }
