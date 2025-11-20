@@ -137,80 +137,68 @@
   </div>
 
   <script>
-    // URL GOOGLE SCRIPT
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
-    function isValidEthAddress(addr) {
-      return /^0x[a-fA-F0-9]{40}$/i.test(addr);
+  function isValidEthAddress(addr) {
+    return /^0x[a-fA-F0-9]{40}$/i.test(addr);
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', async () => {
+    let twitter = document.getElementById('twitter').value.trim();
+    let wallet = document.getElementById('wallet').value.trim();
+
+    const loading = document.getElementById('loading');
+    const error   = document.getElementById('error');
+    const welcome = document.getElementById('welcome');
+    const btn     = document.getElementById('submitBtn');
+
+    loading.style.display = error.style.display = welcome.style.display = 'none';
+
+    if (!twitter) { error.textContent = 'Enter your X(Twitter)'; error.style.display = 'block'; return; }
+    if (!twitter.startsWith('@')) twitter = '@' + twitter.replace(/^@+/, '');
+    document.getElementById('twitter').value = twitter;
+
+    if (!wallet) { error.textContent = 'Enter your ETH wallet'; error.style.display = 'block'; return; }
+    if (!wallet.match(/^0x/i)) { error.textContent = 'Wallet must start with 0x'; error.style.display = 'block'; return; }
+    if (!isValidEthAddress(wallet)) { error.textContent = 'Invalid Wallet Address'; error.style.display = 'block'; return; }
+
+    btn.disabled = true;
+    loading.style.display = 'block';
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ 
+          twitter, 
+          wallet: wallet.toLowerCase(), 
+          timestamp: new Date().toISOString() 
+        })
+      });
+      const data = await res.json();
+
+      if (data.result === 'success') {
+        welcome.style.display = 'block';
+        document.getElementById('twitter').value = '';
+        document.getElementById('wallet').value = '';
+      } 
+      else if (data.result === 'duplicate') {
+        error.textContent = 'This Twitter or Wallet already submitted!';
+        error.style.display = 'block';
+      } 
+      else {
+        throw '';
+      }
+    } 
+    catch (e) {
+      error.textContent = 'Network error – try again';
+      error.style.display = 'block';
+    } 
+    finally {
+      btn.disabled = false;
+      loading.style.display = 'none';
     }
-
-    document.getElementById('submitBtn').addEventListener('click', async () => {
-      let twitter = document.getElementById('twitter').value.trim();
-      let wallet = document.getElementById('wallet').value.trim();
-
-      const loading = document.getElementById('loading');
-      const error   = document.getElementById('error');
-      const welcome = document.getElementById('welcome');
-      const btn     = document.getElementById('submitBtn');
-
-      // Reset messages
-      loading.style.display = error.style.display = welcome.style.display = 'none';
-
-      // Validate X handle
-      if (!twitter) {
-        error.textContent = 'Enter your X(Twitter)';
-        error.style.display = 'block';
-        return;
-      }
-      if (!twitter.startsWith('@')) twitter = '@' + twitter.replace(/^@+/, '');
-      document.getElementById('twitter').value = twitter;
-
-      // Validate wallet
-      if (!wallet) {
-        error.textContent = 'Enter your ETH wallet';
-        error.style.display = 'block';
-        return;
-      }
-      if (!wallet.match(/^0x/i)) {
-        error.textContent = 'Wallet must start with 0x';
-        error.style.display = 'block';
-        return;
-      }
-      if (!isValidEthAddress(wallet)) {
-        error.textContent = 'Invalid Wallet Address';
-        error.style.display = 'block';
-        return;
-      }
-
-      // Submit
-      btn.disabled = true;
-      loading.style.display = 'block';
-
-      try {
-        const res = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify({ 
-            twitter, 
-            wallet: wallet.toLowerCase(), 
-            timestamp: new Date().toISOString() 
-          }),
-          headers: { 'Content-Type': 'text/plain' }
-        });
-        const data = await res.json();
-
-if (data.result === 'success') {
-  welcome.style.display = 'block';
-  document.getElementById('twitter').value = '';
-  document.getElementById('wallet').value = '';
-} 
-else if (data.result === 'duplicate') {
-  error.textContent = 'This Twitter or Wallet already submitted!';
-  error.style.display = 'block';
-} 
-else {
-  throw '';
-}
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
