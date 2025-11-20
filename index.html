@@ -34,27 +34,27 @@
     .input-wrapper {
       position: relative;
       margin: 45px auto;
-      width: 420px;
+      width: 620px;
       max-width: 90vw;
     }
     .input-wrapper input {
       width: 100%;
       padding: 12px 0;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 30px;
       border-bottom: none;
       color: white;
       font-size: 1.6rem;
       text-align: center;
       backdrop-filter: blur(10px);
     }
-    .input-wrapper input::placeholder { color: rgba(255,255,255,0.7); }
+    .input-wrapper input::placeholder { color: rgba(255,255,255,0.3); }
     .input-wrapper input:focus {
       outline: none;
       background: rgba(255,255,255,0.1);
     }
     .input-wrapper::before {
-      content: "Your X:";
+      content: "X(Twitter):";
       position: absolute;
       left: 50%;
       top: -28px;
@@ -68,14 +68,14 @@
 
     button {
       margin-top: 10px;
-      padding: 12px 45px;
-      background: rgba(255,255,255,0.1);
+      padding: 9px 35px;
+      background: rgba(255,255,255,0.08);
       color: white;
       border: none;
-      border-radius: 50px;
-      font-size: 2.0rem;
+      border-radius: 40px;
+      font-size: 1.2rem;
       font-weight: bold;
-      letter-spacing: 4px;
+      letter-spacing: 2px;
       cursor: pointer;
       box-shadow: none;
       transition: all 0.3s;
@@ -88,15 +88,15 @@
     }
 
     .message {
-      margin-top: 50px;
-      font-size: 2rem;
-      letter-spacing: 3px;
+      margin-top: 10px;
+      font-size: 1rem;
+      letter-spacing: 2px;
       display: none;
     }
-    .error-msg { color: #ff9999; }
+    .error-msg { color: #ff0000; }
     .welcome {
-      font-size: 3rem !important;
-      animation: bounce 1.8s infinite;
+      font-size: 1rem !important;
+      animation: bounce 1.8s;
     }
     @keyframes bounce {
       0%,100%{transform:translateY(0)}
