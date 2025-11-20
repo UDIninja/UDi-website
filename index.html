@@ -20,10 +20,10 @@ body {
 
 /* GIF trên cùng */
 .gif-top {
-    position: center;
-    top: 50px;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%, -50%);
     width: 200px;
     height: auto;
     pointer-events: none;
@@ -131,7 +131,7 @@ body {
 <div id="password-screen">
     <img src="IMG_1930.gif" class="gif-top" alt="Password GIF">
     <input type="password" id="passInput" placeholder="Enter Password">
-    <button oneclick="checkPass()">Enter</button>
+    <button onclick="checkPass()">Enter</button>
 </div>
 
 <!-- MAIN FORM -->
