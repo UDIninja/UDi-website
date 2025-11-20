@@ -197,18 +197,19 @@
           headers: { 'Content-Type': 'text/plain' }
         });
         const data = await res.json();
-        if (data.result === 'success') {
-          welcome.style.display = 'block';
-          document.getElementById('twitter').value = '';
-          document.getElementById('wallet').value = '';
-        } else throw '';
-      } catch (e) {
-        error.textContent = 'Network error – try again';
-        error.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        loading.style.display = 'none';
-      }
+
+if (data.result === 'success') {
+  welcome.style.display = 'block';
+  document.getElementById('twitter').value = '';
+  document.getElementById('wallet').value = '';
+} 
+else if (data.result === 'duplicate') {
+  error.textContent = 'This Twitter or Wallet already submitted!';
+  error.style.display = 'block';
+} 
+else {
+  throw '';
+}
     });
   </script>
 </body>
