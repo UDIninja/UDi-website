@@ -123,10 +123,85 @@
 .footer .separator {
   opacity: 0.6;
 }
+/* PASSWORD SCREEN */
+.password-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #Fd8c00;
+  display: flex;
+  align-items: center;
+  justify-content: нотcenter;
+  z-index: 9999;
+  animation: fadeIn 0.6s;
+}
+
+.pass-container {
+  text-align: center;
+}
+
+.pass-logo {
+  width: 280px;
+  margin-bottom: 30px;
+  animation: bounce 1.8s infinite;
+}
+
+.pass-wrapper {
+  position: relative;
+  width: 340px;
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+#passInput {
+  width: 100%;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 2px;
+  backdrop-filter: blur(10px);
+}
+
+#passInput::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+#passInput:focus {
+  outline: none;
+  background: rgba(255,255,255,0.15);
+}
+
+.pass-error {
+  margin-top: 15px;
+  color: #ff1b26;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.pass-error.show {
+  opacity: 1;
+}
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- PASSWORD SCREEN -->
+<div class="password-screen" id="passwordScreen">
+  <div class="pass-container">
+    <img src="Loon.gif" alt="UDI" class="pass-logo"> <!-- another logo -->
+    <div class="pass-wrapper">
+      <input type="password" id="passInput" placeholder="Enter password..." autocomplete="off">
+      <div class="pass-error" id="passError">Incorrect!</div>
+    </div>
+  </div>
+</div>
+
+<!-- mainForm (hide) -->
+  <div class="container" id="mainForm" style="display: none;">
     <img src="Loon.gif" alt="UDI" class="logo">
 
     <div class="input-wrapper">
@@ -150,6 +225,33 @@
   </div>
 
   <script>
+  // CHANGE PASSWORD HERE (bạn tự đặt, có thể để nhiều password cách nhau bằng dấu phẩy)
+const VALID_PASSWORDS = ['udi2025', 'updowninfinity', 'yourpass123']; // ← sửa ở đây
+
+const passwordScreen = document.getElementById('passwordScreen');
+const mainForm       = document.getElementById('mainForm');
+const passInput      = document.getElementById('passInput');
+const passError      = document.getElementById('passError');
+
+passInput.focus();
+
+passInput.addEventListener('input', function() {
+  const value = this.value.trim();
+  
+  if (VALID_PASSWORDS.includes(value.toLowerCase())) {
+    // CORRECT → OPEN MAINFORM
+    passwordScreen.style.opacity = '0';
+    setTimeout(() => {
+      passwordScreen.style.display = 'none';
+      mainForm.style.display = 'flex'; // hoặc 'block' tùy bạn
+    }, 400);
+  } else if (value.length > 0) {
+    // Sai nhưng đã gõ gì đó → hiện lỗi
+    passError.classList.add('show');
+  } else {
+    passError.classList.remove('show');
+  }
+});
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
   function isValidEthAddress(addr) {
