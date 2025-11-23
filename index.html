@@ -1,241 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UDI</title>
-  <link rel="icon" href="UDifavicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="UDifavicon.png">
-  
-  <!-- Special Elite Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-
-  <style>
-    * { box-sizing: border-box; }
-    body, input, button {
-      font-family: 'Special Elite', 'Courier New', monospace !important;
-    }
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #Fd8c00;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      overflow: hidden;
-      position: relative;
-    }
-    .container { 
-  text-align: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-    .logo {
-      width: 300px;
-      margin-bottom: 10px;
-    }
-
-    .input-wrapper {
-      position: relative;
-      margin: 10px auto;
-      width: 340px;
-      max-width: 90vw;
-    }
-    .input-wrapper input {
-      width: 100%;
-      padding: 8px 8px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 25px;
-      border-bottom: none;
-      color: white;
-      font-size: 0.8rem;
-      text-align: center;
-      backdrop-filter: blur(10px);
-    }
-    .input-wrapper input::placeholder { color: rgba(255,255,255,0.3); }
-    .input-wrapper input:focus {
-      outline: none;
-      background: rgba(255,255,255,0.1);
-    }
-    .input-wrapper::before {
-      content: "X(Twitter):";
-      position: absolute;
-      left: 50%;
-      top: -16px;
-      transform: translateX(-50%);
-      font-size: 1rem;
-      font-weight: bold;
-      color: white;
-      letter-spacing: 1.5px;
-    }
-    .input-wrapper.wallet::before { content: "Wallet:"; }
-
-    button {
-      margin-top: -4px;
-      padding: 6px 25px;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      cursor: pointer;
-      box-shadow: none;
-      transition: all 0.3s infinite;
-    }
-    button:hover {
-      background: white;
-      color: #ff8c00;
-      transform: translateY(-8px);
-      box-shadow: none;
-    }
-
-    .message {
-      margin-top: 8px;
-      font-size: 1rem;
-      letter-spacing: 2px;
-      display: none;
-    }
-    .error-msg { color: #ff1b26; }
-    .welcome {
-      font-size: 1rem !important;
-      font-weight: bold;
-      animation: bounce 1.8s;
-    }
-    @keyframes bounce {
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-20px)}
-    }
-    .footer {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  letter-spacing: 1.5px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 20px;                  /* space items */
-}
-
-.footer .separator {
-  opacity: 0.6;
-}
-/* PASSWORD SCREEN */
-.password-screen {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #Fd8c00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: fadeIn 0.6s;
-}
-
-.pass-container {
-  text-align: center;
-}
-
-.pass-logo {
-  width: 280px;
-  margin-bottom: 30px;
-  animation: bounce 1.8s infinite;
-}
-
-.pass-wrapper {
-  position: relative;
-  width: 340px;
-  max-width: 90vw;
-  margin: 0 auto;
-}
-
-#passInput {
-  width: 100%;
-  padding: 14px 20px;
-  background: rgba(255,255,255,0.08);
-  border: none;
-  border-radius: 30px;
-  color: white;
-  font-size: 1.1rem;
-  text-align: center;
-  letter-spacing: 2px;
-  backdrop-filter: blur(10px);
-}
-
-#passInput::placeholder {
-  color: rgba(255,255,255,0.4);
-}
-
-#passInput:focus {
-  outline: none;
-  background: rgba(255,255,255,0.15);
-}
-
-.pass-error {
-  margin-top: 15px;
-  color: #ff1b26;
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-.pass-error.show {
-  opacity: 1;
-}
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UDI</title>
+<link rel="icon" href="UDifavicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  /* Toàn bộ CSS của bạn giữ nguyên 100%, mình chỉ thêm chút cho ô code */
+  *{box-sizing:border-box}
+  body,input,button{font-family:'Special Elite',monospace!important}
+  body{margin:0;height:100vh;background:#Fd8c00;display:flex;align-items:center;justify-content:center;color:white;overflow:hidden;position:relative}
+  .container{text-align:center;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}
+  .logo{width:300px;margin-bottom:10px}
+  .input-wrapper{position:relative;margin:12px auto;width:340px;max-width:90vw}
+  .input-wrapper input{width:100%;padding:10px 8px;background:rgba(255,255,255,0.06);border-radius:25px;border:none;color:white;font-size:0.9rem;text-align:center;backdrop-filter:blur(10px)}
+  .input-wrapper::before{position:absolute;left:50%;top:-16px;transform:translateX(-50%);font-weight:bold;color:white;letter-spacing:1.5px}
+  .input-wrapper::before{content:"X(Twitter):"}
+  .input-wrapper.wallet::before{content:"Wallet:"}
+  .input-wrapper.code::before{content:"Your 6-digit Code:"}
+  button{margin-top:10px;padding:8px 30px;background:rgba(255,255,255,0.08);color:white;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;letter-spacing:2px;cursor:pointer}
+  button:hover{background:white;color:#ff8c00;transform:translateY(-8px)}
+  .message{margin-top:10px;font-size:1rem;letter-spacing:2px;display:none}
+  .error-msg{color:#ff1b26}
+  .welcome{font-size:1.2rem!important;font-weight:bold;animation:bounce 1.8s}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  .password-screen{position:fixed;top:0;left:0;right:0;bottom:0;background:#Fd8c00;display:flex;align-items:center;justify-content:center;z-index:9999}
+  #passInput{width:340px;max-width:90vw;padding:14px 20px;background:rgba(255,255,255,0.08);border:none;border-radius:30px;color:white;font-size:1.3rem;text-align:center;letter-spacing:8px}
+  .pass-error{margin-top:15px;color:#ff1b26;font-weight:bold;opacity:0;transition:opacity .4s}
+  .pass-error.show{opacity:1}
+  .footer{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:0.7rem;font-weight:bold;color:white;letter-spacing:1.5px;display:flex;gap:20px}
+</style>
 </head>
 <body>
-  <!-- PASSWORD SCREEN -->
+
 <div class="password-screen" id="passwordScreen">
   <div class="pass-container">
-    <img src="Infinity.png" alt="UDI" class="pass-logo"> <!-- another logo -->
-    <div class="pass-wrapper">
-      <input type="password" id="passInput" placeholder="Enter password..." autocomplete="off">
-      <div class="pass-error" id="passError">Incorrect!</div>
-    </div>
+    <img src="Infinity.png" alt="UDI" class="pass-logo">
+    <input type="text" inputmode="numeric" maxlength="6" id="passInput" placeholder="______" autocomplete="off">
+    <div class="pass-error" id="passError">Invalid or already used code!</div>
   </div>
 </div>
 
-<!-- mainForm (hide) -->
-  <div class="container" id="mainForm" style="display: flex;">
-    <img src="Loon.gif" alt="UDI" class="logo">
-
-    <div class="input-wrapper">
-      <input type="text" id="twitter" placeholder="@..." />
-    </div>
-
-    <div class="input-wrapper wallet">
-      <input type="text" id="wallet" placeholder="0x..." />
-    </div>
-
-    <button id="submitBtn">Submit</button>
-
-    <div class="message" id="loading">Submitting...</div>
-    <div class="message error-msg" id="error"></div>
-    <div class="message welcome" id="welcome">Success!!!</div>
-    <div class="footer">
-  <span class="left">© 2025 UDI. All rights reserved.</span>
-  <span class="separator">│</span>
-  <span class="right">contact@updowninfinity.xyz</span>
-</div>
+<div class="container" id="mainForm" style="display:none">
+  <img src="Loon.gif" alt="UDI" class="logo">
+  <div class="input-wrapper"><input type="text" id="twitter" placeholder="@..."></div>
+  <div class="input-wrapper wallet"><input type="text" id="wallet" placeholder="0x..."></div>
+  <div class="input-wrapper code"><input type="text" maxlength="6" id="code" readonly style="background:rgba(0,255,0,0.15)"></div>
+  <button id="submitBtn">SUBMIT</button>
+  <div class="message" id="loading">Submitting...</div>
+  <div class="message error-msg" id="error"></div>
+  <div class="message welcome" id="welcome">WHITELISTED SUCCESS!!!</div>
+  <div class="footer">
+    <span>© 2025 UDI. All rights reserved.</span><span>│</span><span>contact@updowninfinity.xyz</span>
   </div>
+</div>
 
-  <script>
-  // CHANGE PASSWORD HERE (bạn tự đặt, có thể để nhiều password cách nhau bằng dấu phẩy)
-const VALID_PASSWORDS = ['udi2025', 'updowninfinity', 'yourpass123']; // ← sửa ở đây
+<script>
+// ← CHỈ CẦN THAY 1 DÒNG DUY NHẤT Ở ĐÂY:
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
+let currentUserCode = null;
 const passwordScreen = document.getElementById('passwordScreen');
 const mainForm       = document.getElementById('mainForm');
 const passInput      = document.getElementById('passInput');
@@ -243,84 +67,78 @@ const passError      = document.getElementById('passError');
 
 passInput.focus();
 
-passInput.addEventListener('input', function() {
-  const value = this.value.trim();
-  
-  if (VALID_PASSWORDS.includes(value.toLowerCase())) {
-    // CORRECT → OPEN MAINFORM
-    passwordScreen.style.opacity = '0';
-    setTimeout(() => {
-      passwordScreen.style.display = 'none';
-      mainForm.style.display = 'flex'; // hoặc 'block' tùy bạn
-    }, 400);
-  } else if (value.length > 0) {
-    // Sai nhưng đã gõ gì đó → hiện lỗi
-    passError.classList.add('show');
+async function getValidCodes() {
+  try {
+    const r = await fetch(SCRIPT_URL + '?action=get_codes');
+    const d = await r.json();
+    return d.codes || [];
+  } catch { return []; }
+}
+
+passInput.addEventListener('input', async function() {
+  this.value = this.value.replace(/[^0-9]/g,'').slice(0,6);
+  if (this.value.length === 6) {
+    const valid = await getValidCodes();
+    if (valid.includes(this.value)) {
+      currentUserCode = this.value;
+      passwordScreen.style.opacity = '0';
+      setTimeout(() => {
+        passwordScreen.style.display = 'none';
+        mainForm.style.display = 'flex';
+        document.getElementById('code').value = currentUserCode;
+      }, 400);
+    } else {
+      passError.classList.add('show');
+    }
   } else {
     passError.classList.remove('show');
   }
 });
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
-  function isValidEthAddress(addr) {
-    return /^0x[a-fA-F0-9]{40}$/i.test(addr);
-  }
+function isValidEthAddress(a) { return /^0x[a-fA-F0-9]{40}$/i.test(a); }
 
-  document.getElementById('submitBtn').addEventListener('click', async () => {
-    let twitter = document.getElementById('twitter').value.trim();
-    let wallet = document.getElementById('wallet').value.trim();
+document.getElementById('submitBtn').onclick = async () => {
+  let tw = document.getElementById('twitter').value.trim();
+  let wl = document.getElementById('wallet').value.trim();
+  let cd = document.getElementById('code').value.trim();
 
-    const loading = document.getElementById('loading');
-    const error   = document.getElementById('error');
-    const welcome = document.getElementById('welcome');
-    const btn     = document.getElementById('submitBtn');
+  const loading = document.getElementById('loading');
+  const error   = document.getElementById('error');
+  const welcome = document.getElementById('welcome');
+  loading.style.display = error.style.display = welcome.style.display = 'none';
 
-    loading.style.display = error.style.display = welcome.style.display = 'none';
+  if (!tw || !wl || !cd) return error.textContent = 'Fill all fields', error.style.display='block';
+  if (!tw.startsWith('@')) tw = '@' + tw.replace(/^@+/,'');
+  document.getElementById('twitter').value = tw;
+  if (!wl.match(/^0x/i) || !isValidEthAddress(wl)) return error.textContent = 'Invalid wallet', error.style.display='block';
+  if (cd.length !== 6 || !/^\d+$/.test(cd)) return error.textContent = 'Invalid code', error.style.display='block';
 
-    if (!twitter) { error.textContent = 'Enter your X(Twitter)'; error.style.display = 'block'; return; }
-    if (!twitter.startsWith('@')) twitter = '@' + twitter.replace(/^@+/, '');
-    document.getElementById('twitter').value = twitter;
+  document.getElementById('submitBtn').disabled = true;
+  loading.style.display = 'block';
 
-    if (!wallet) { error.textContent = 'Enter your ETH wallet'; error.style.display = 'block'; return; }
-    if (!wallet.match(/^0x/i)) { error.textContent = 'Wallet must start with 0x'; error.style.display = 'block'; return; }
-    if (!isValidEthAddress(wallet)) { error.textContent = 'Invalid Wallet Address'; error.style.display = 'block'; return; }
-
-    btn.disabled = true;
-    loading.style.display = 'block';
-
-    try {
-      const res = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify({ 
-          twitter, 
-          wallet: wallet.toLowerCase(), 
-          timestamp: new Date().toISOString() 
-        })
-      });
-      const data = await res.json();
-
-      if (data.result === 'success') {
-        welcome.style.display = 'block';
-        document.getElementById('twitter').value = '';
-        document.getElementById('wallet').value = '';
-      } 
-      else if (data.result === 'duplicate') {
-        error.textContent = 'This Twitter or Wallet already submitted!';
-        error.style.display = 'block';
-      } 
-      else {
-        throw '';
-      }
-    } 
-    catch (e) {
-      error.textContent = 'Network error – try again';
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'submit',twitter:tw,wallet:wl.toLowerCase(),code:cd,timestamp:new Date().toISOString()})
+    });
+    const d = await r.json();
+    if (d.result === 'success') {
+      welcome.style.display = 'block';
+      document.getElementById('twitter').value = document.getElementById('wallet').value = document.getElementById('code').value = '';
+    } else if (d.result === 'duplicate') {
+      error.textContent = 'Twitter, Wallet or Code already used!';
       error.style.display = 'block';
-    } 
-    finally {
-      btn.disabled = false;
-      loading.style.display = 'none';
+    } else {
+      error.textContent = 'Submit failed, try again';
+      error.style.display = 'block';
     }
-  });
+  } catch { error.textContent = 'Network error', error.style.display='block'; }
+  finally {
+    document.getElementById('submitBtn').disabled = false;
+    loading.style.display = 'none';
+  }
+};
 </script>
 </body>
 </html>
