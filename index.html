@@ -105,7 +105,7 @@
   background: rgba(255,255,255,0.15);
 }
     .footer {
-      position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+      position:fixed; bottom:15px; left:50%; transform:translateX(-50%);
       font-size:0.75rem; font-weight:bold; letter-spacing:1.5px;
       display:flex; gap:20px; white-space:nowrap;
       font-family:'Special Elite', monospace !important;
@@ -121,7 +121,7 @@
     <div class="pass-container">
       <img src="Infinity.png" alt="UDI" class="pass-logo">
       <input type="text" inputmode="text" maxlength="8" id="passInput" placeholder="Code here..." autocomplete="off">
-      <div class="pass-error" id="passError">Invalid or already used code!</div>
+      <div class="pass-error" id="passError">invalid or already used code!</div>
     </div>
   </div>
 
@@ -130,13 +130,13 @@
     <img src="Loon.gif" alt="UDI" class="logo">
 
     <!-- 3 ô input sát rạt, không có label bên trên -->
-<div style="margin: 8px 0;">
+<div style="margin: 5px 0;">
   <input type="text" id="twitter" placeholder="@yourX" class="compact-input">
 </div>
-<div style="margin: 8px 0;">
-  <input type="text" id="wallet" placeholder="0x..." class="compact-input">
+<div style="margin: 5px 0;">
+  <input type="text" id="wallet" placeholder="0x...eth" class="compact-input">
 </div>
-<div style="margin: 8px 0;">
+<div style="margin: 5px 0;">
   <input type="text" id="code" maxlength="8" readonly class="compact-input" style="background:rgba(0,255,0,0.15);">
 </div>
 
