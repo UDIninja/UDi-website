@@ -6,120 +6,95 @@
   <title>UDI Whitelist</title>
   <link rel="icon" href="UDifavicon.png" type="image/png">
   <link rel="apple-touch-icon" href="UDifavicon.png">
-  <!-- Special Elite Font -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0; height: 100%; width: 100%; overflow-x: hidden;
-      font-family: 'Special Elite', 'Courier New', monospace !important;
-    }
+    html, body { margin:0; padding:0; height:100%; width:100%; overflow-x:hidden; }
     body {
-      background: #Fd8c00;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      -webkit-text-size-adjust: 100%;
+      background:#Fd8c00; color:white; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Special Elite', monospace !important;
+      -webkit-text-size-adjust:100%;
     }
 
-    /* ==================== PASSWORD SCREEN ==================== */
+    /* PASSWORD SCREEN */
     .password-screen {
-      position: fixed; inset: 0; background: #Fd8c00;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999; padding: 20px;
+      position:fixed; inset:0; background:#Fd8c00;
+      display:flex; align-items:center; justify-content:center;
+      z-index:9999; padding:20px;
     }
-    .pass-container { text-align: center; width: 100%; max-width: 380px; }
-    .pass-logo {
-      width: 280px; max-width: 90vw; margin-bottom: 30px;
-      animation: bounce 1.8s infinite;
-    }
+    .pass-container { text-align:center; max-width:380px; width:100%; }
+    .pass-logo { width:280px; max-width:90vw; margin-bottom:30px; animation:bounce 1.8s infinite; }
     #passInput {
-      width: 100%; padding: 18px 20px;
-      background: rgba(255,255,255,0.08); border: none; border-radius: 30px;
-      color: white; font-size: 1.7rem; text-align: center;
-      letter-spacing: 6px; backdrop-filter: blur(10px);
-      font-family: 'Special Elite', monospace !important;
+      width:100%; padding:18px 20px; background:rgba(255,255,255,0.08);
+      border:none; border-radius:30px; color:white; font-size:1.7rem;
+      text-align:center; letter-spacing:6px; backdrop-filter:blur(10px);
+      font-family:'Special Elite', monospace !important;
     }
-    #passInput::placeholder {
-      color: rgba(255,255,255,0.5);
-      font-family: 'Special Elite', monospace !important;
-    }
+    #passInput::placeholder { color:rgba(255,255,255,0.5); }
     .pass-error {
-      margin-top: 20px; color: #ff1b26; font-weight: bold;
-      font-size: 1.1rem; opacity: 0; transition: opacity 0.4s;
-      font-family: 'Special Elite', monospace !important;
+      margin-top:20px; color:#ff1b26; font-weight:bold; font-size:1.1rem;
+      opacity:0; transition:opacity .4s;
+      font-family:'Special Elite', monospace !important;
     }
-    .pass-error.show { opacity: 1; }
+    .pass-error.show { opacity:1; }
 
-    /* ==================== MAIN FORM ==================== */
+    /* MAIN FORM */
     .container {
-      text-align: center; width: 100%; max-width: 420px;
-      padding: 20px; display: flex; flex-direction: column; align-items: center;
+      text-align:center; max-width:420px; width:100%; padding:20px;
+      display:flex; flex-direction:column; align-items:center;
     }
-    .logo { width: 300px; max-width: 90vw; margin-bottom: 30px; }
+    .logo { width:300px; max-width:90vw; margin-bottom:30px; }
 
-    .input-wrapper { position: relative; width: 100%; margin: 18px 0; }
-    .input-wrapper input {
-      width: 100%; padding: 14px 20px;
-      background: rgba(255,255,255,0.06); border: none; border-radius: 30px;
-      color: white; font-size: 1.2rem; text-align: center;
-      backdrop-filter: blur(10px);
-      font-family: 'Special Elite', monospace !important;
+    /* DÙNG LABEL THAY CHO ::before → KHÔNG BAO GIỜ BỊ ĐỘI LÊN NỮA */
+    .field {
+      width:100%; margin:25px 0; text-align:center;
     }
-    .input-wrapper input::placeholder {
-      color: rgba(255,255,255,0.5);
-      font-family: 'Special Elite', monospace !important;
+    .field label {
+      display:block; margin-bottom:8px;
+      font-size:1rem; font-weight:bold; letter-spacing:1.5px;
     }
-    .input-wrapper::before {
-      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      font-size: 0.95rem; font-weight: bold; letter-spacing: 1.5px;
-      font-family: 'Special Elite', monospace !important;
+    .field input {
+      width:100%; padding:14px 20px;
+      background:rgba(255,255,255,0.06); border:none; border-radius:30px;
+      color:white; font-size:1.2rem; text-align:center;
+      backdrop-filter:blur(10px);
+      font-family:'Special Elite', monospace !important;
     }
-    .input-wrapper:nth-child(1)::before { content: "X(Twitter):"; }
-    .input-wrapper:nth-child(2)::before { content: "Wallet:"; }
-    .input-wrapper:nth-child(3)::before { content: "Your Code:"; }
+    .field input::placeholder { color:rgba(255,255,255,0.5); }
+    .field input[readonly] { background:rgba(0,255,0,0.15); }
 
     button {
-      margin-top: 25px; padding: 12px 45px;
-      background: rgba(255,255,255,0.08); color: white;
-      border: none; border-radius: 30px; font-size: 1.4rem;
-      font-weight: bold; letter-spacing: 3px; cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Special Elite', monospace !important;
+      margin-top:30px; padding:12px 50px;
+      background:rgba(255,255,255,0.08); color:white;
+      border:none; border-radius:30px; font-size:1.4rem;
+      font-weight:bold; letter-spacing:3px; cursor:pointer;
+      transition:all .3s;
+      font-family:'Special Elite', monospace !important;
     }
-    button:hover {
-      background: white; color: #ff8c00; transform: translateY(-8px);
-    }
+    button:hover { background:white; color:#ff8c00; transform:translateY(-8px); }
 
     .message {
-      margin-top: 20px; font-size: 1.3rem; letter-spacing: 2px; display: none;
-      font-family: 'Special Elite', monospace !important;
+      margin-top:20px; font-size:1.3rem; letter-spacing:2px; display:none;
+      font-family:'Special Elite', monospace !important;
     }
-    .error-msg { color: #ff1b26; }
-    .welcome {
-      font-size: 1.6rem !important; font-weight: bold;
-      animation: bounce 1.8s infinite;
-      font-family: 'Special Elite', monospace !important;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
+    .error-msg { color:#ff1b26; }
+    .welcome { font-size:1.6rem !important; animation:bounce 1.8s infinite; }
 
     .footer {
-      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-size: 0.75rem; font-weight: bold; letter-spacing: 1.5px;
-      display: flex; gap: 20px; white-space: nowrap;
-      font-family: 'Special Elite', monospace !important;
+      position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+      font-size:0.75rem; font-weight:bold; letter-spacing:1.5px;
+      display:flex; gap:20px; white-space:nowrap;
+      font-family:'Special Elite', monospace !important;
     }
+
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
   </style>
 </head>
 <body>
 
-  <!-- MÀN HÌNH NHẬP CODE 8 KÝ TỰ -->
+  <!-- MÀN HÌNH NHẬP CODE -->
   <div class="password-screen" id="passwordScreen">
     <div class="pass-container">
       <img src="Infinity.png" alt="UDI" class="pass-logo">
@@ -132,9 +107,20 @@
   <div class="container" id="mainForm" style="display:none;">
     <img src="Loon.gif" alt="UDI" class="logo">
 
-    <div class="input-wrapper"><input type="text" id="twitter" placeholder="@yourhandle"></div>
-    <div class="input-wrapper"><input type="text" id="wallet" placeholder="0x..."></div>
-    <div class="input-wrapper"><input type="text" id="code" maxlength="8" readonly style="background:rgba(0,255,0,0.15);"></div>
+    <div class="field">
+      <label>X(Twitter):</label>
+      <input type="text" id="twitter" placeholder="@yourhandle">
+    </div>
+
+    <div class="field">
+      <label>Wallet:</label>
+      <input type="text" id="wallet" placeholder="0x...">
+    </div>
+
+    <div class="field">
+      <label>Your 8-char Code:</label>
+      <input type="text" id="code" maxlength="8" readonly>
+    </div>
 
     <button id="submitBtn">SUBMIT</button>
 
@@ -150,7 +136,7 @@
   </div>
 
   <script>
-    // THAY LINK NÀY BẰNG LINK GOOGLE APPS SCRIPT CỦA BẠN
+    // THAY LINK CỦA BẠN VÀO ĐÂY
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
     let currentUserCode = null;
@@ -158,30 +144,23 @@
     const mainForm       = document.getElementById('mainForm');
     const passInput      = document.getElementById('passInput');
     const passError      = document.getElementById('passError');
-
     passInput.focus();
 
     async function getValidCodes() {
       try {
-        const res = await fetch(SCRIPT_URL + '?action=get_codes');
-        const data = await res.json();
-        return data.codes || [];
-      } catch (e) {
-        console.log('Test mode active');
-        return [];
-      }
+        const r = await fetch(SCRIPT_URL + '?action=get_codes');
+        const d = await r.json();
+        return d.codes || [];
+      } catch { return []; }
     }
 
     passInput.addEventListener('input', async function () {
-      this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
-      const value = this.value.toUpperCase();
-
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8).toUpperCase();
       passError.classList.remove('show');
-
-      if (value.length === 8) {
-        const validCodes = await getValidCodes();
-        if (validCodes.length === 0 || validCodes.includes(value)) {
-          currentUserCode = value;
+      if (this.value.length === 8) {
+        const valid = await getValidCodes();
+        if (valid.length === 0 || valid.includes(this.value)) {
+          currentUserCode = this.value;
           passwordScreen.style.opacity = '0';
           setTimeout(() => {
             passwordScreen.style.display = 'none';
@@ -194,64 +173,45 @@
       }
     });
 
-    function isValidEthAddress(addr) {
-      return /^0x[a-fA-F0-9]{40}$/i.test(addr);
-    }
+    function isValidEthAddress(a) { return /^0x[a-fA-F0-9]{40}$/i.test(a); }
 
     document.getElementById('submitBtn').addEventListener('click', async () => {
-      let twitter = document.getElementById('twitter').value.trim();
-      let wallet  = document.getElementById('wallet').value.trim();
-      let code    = document.getElementById('code').value.trim().toUpperCase();
+      let tw = document.getElementById('twitter').value.trim();
+      let wl = document.getElementById('wallet').value.trim();
+      let cd = document.getElementById('code').value.trim();
 
       const loading = document.getElementById('loading');
       const error   = document.getElementById('error');
       const welcome = document.getElementById('welcome');
-
       loading.style.display = error.style.display = welcome.style.display = 'none';
 
-      if (!twitter || !wallet || !code) {
-        error.textContent = 'Please fill all fields'; error.style.display = 'block'; return;
-      }
-      if (!twitter.startsWith('@')) twitter = '@' + twitter.replace(/^@+/, '');
-      document.getElementById('twitter').value = twitter;
-
-      if (!wallet.match(/^0x/i) || !isValidEthAddress(wallet)) {
-        error.textContent = 'Invalid wallet address'; error.style.display = 'block'; return;
-      }
-      if (code.length !== 8) {
-        error.textContent = 'Code must be 8 characters'; error.style.display = 'block'; return;
-      }
+      if (!tw || !wl || !cd) return error.textContent = 'Please fill all fields', error.style.display='block';
+      if (!tw.startsWith('@')) tw = '@' + tw.replace(/^@+/, '');
+      document.getElementById('twitter').value = tw;
+      if (!wl.match(/^0x/i) || !isValidEthAddress(wl)) return error.textContent = 'Invalid wallet address', error.style.display='block';
+      if (cd.length !== 8) return error.textContent = 'Code must be 8 characters', error.style.display='block';
 
       document.getElementById('submitBtn').disabled = true;
       loading.style.display = 'block';
 
       try {
-        const res = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({action:'submit', twitter, wallet: wallet.toLowerCase(), code, timestamp: new Date().toISOString()})
+        const r = await fetch(SCRIPT_URL, {
+          method:'POST', headers:{'Content-Type':'text/plain'},
+          body:JSON.stringify({action:'submit', twitter:tw, wallet:wl.toLowerCase(), code:cd, timestamp:new Date().toISOString()})
         });
-        const data = await res.json();
-
-        if (data.result === 'success') {
+        const d = await r.json();
+        if (d.result === 'success') {
           welcome.style.display = 'block';
-          document.getElementById('twitter').value = '';
-          document.getElementById('wallet').value = '';
-          document.getElementById('code').value = '';
-        } else if (data.result === 'duplicate') {
+          document.getElementById('twitter').value = document.getElementById('wallet').value = document.getElementById('code').value = '';
+        } else if (d.result === 'duplicate') {
           error.textContent = 'Twitter, Wallet or Code already used!';
           error.style.display = 'block';
         } else {
           error.textContent = 'Something went wrong';
           error.style.display = 'block';
         }
-      } catch (e) {
-        error.textContent = 'Network error – try again later';
-        error.style.display = 'block';
-      } finally {
-        document.getElementById('submitBtn').disabled = false;
-        loading.style.display = 'none';
-      }
+      } catch { error.textContent = 'Network error – try again later'; error.style.display='block'; }
+      finally { document.getElementById('submitBtn').disabled = false; loading.style.display='none'; }
     });
   </script>
 </body>
