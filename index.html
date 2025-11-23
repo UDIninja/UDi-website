@@ -81,7 +81,29 @@
     }
     .error-msg { color:#ff1b26; }
     .welcome { font-size:1.6rem !important; animation:bounce 1.8s infinite; }
-
+    /* INPUT SIÊU SÁT + ĐẸP */
+.compact-input {
+  width: 100%;
+  max-width: 360px;
+  padding: 16px 20px !important;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 1.35rem !important;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  font-family: 'Special Elite', monospace !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.compact-input::placeholder {
+  color: rgba(255,255,255,0.55);
+  font-family: 'Special Elite', monospace !important;
+}
+.compact-input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.15);
+}
     .footer {
       position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
       font-size:0.75rem; font-weight:bold; letter-spacing:1.5px;
@@ -107,20 +129,16 @@
   <div class="container" id="mainForm" style="display:none;">
     <img src="Loon.gif" alt="UDI" class="logo">
 
-    <div class="field">
-      <label>X(Twitter):</label>
-      <input type="text" id="twitter" placeholder="@yourhandle">
-    </div>
-
-    <div class="field">
-      <label>Wallet:</label>
-      <input type="text" id="wallet" placeholder="0x...">
-    </div>
-
-    <div class="field">
-      <label>Your Code:</label>
-      <input type="text" id="code" maxlength="8" readonly>
-    </div>
+    <!-- 3 ô input sát rạt, không có label bên trên -->
+<div style="margin: 30px 0;">
+  <input type="text" id="twitter" placeholder="@yourhandle" class="compact-input">
+</div>
+<div style="margin: 14px 0;">
+  <input type="text" id="wallet" placeholder="0x..." class="compact-input">
+</div>
+<div style="margin: 14px 0;">
+  <input type="text" id="code" maxlength="8" readonly class="compact-input" style="background:rgba(0,255,0,0.15);">
+</div>
 
     <button id="submitBtn">SUBMIT</button>
 
