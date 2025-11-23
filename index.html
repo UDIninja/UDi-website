@@ -1,144 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UDI</title>
-<link rel="icon" href="UDifavicon.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-<style>
-  /* Toàn bộ CSS của bạn giữ nguyên 100%, mình chỉ thêm chút cho ô code */
-  *{box-sizing:border-box}
-  body,input,button{font-family:'Special Elite',monospace!important}
-  body{margin:0;height:100vh;background:#Fd8c00;display:flex;align-items:center;justify-content:center;color:white;overflow:hidden;position:relative}
-  .container{text-align:center;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}
-  .logo{width:300px;margin-bottom:10px}
-  .input-wrapper{position:relative;margin:12px auto;width:340px;max-width:90vw}
-  .input-wrapper input{width:100%;padding:10px 8px;background:rgba(255,255,255,0.06);border-radius:25px;border:none;color:white;font-size:0.9rem;text-align:center;backdrop-filter:blur(10px)}
-  .input-wrapper::before{position:absolute;left:50%;top:-16px;transform:translateX(-50%);font-weight:bold;color:white;letter-spacing:1.5px}
-  .input-wrapper::before{content:"X(Twitter):"}
-  .input-wrapper.wallet::before{content:"Wallet:"}
-  .input-wrapper.code::before{content:"Your 6-digit Code:"}
-  button{margin-top:10px;padding:8px 30px;background:rgba(255,255,255,0.08);color:white;border:none;border-radius:30px;font-size:1.1rem;font-weight:bold;letter-spacing:2px;cursor:pointer}
-  button:hover{background:white;color:#ff8c00;transform:translateY(-8px)}
-  .message{margin-top:10px;font-size:1rem;letter-spacing:2px;display:none}
-  .error-msg{color:#ff1b26}
-  .welcome{font-size:1.2rem!important;font-weight:bold;animation:bounce 1.8s}
-  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-  .password-screen{position:fixed;top:0;left:0;right:0;bottom:0;background:#Fd8c00;display:flex;align-items:center;justify-content:center;z-index:9999}
-  #passInput{width:340px;max-width:90vw;padding:14px 20px;background:rgba(255,255,255,0.08);border:none;border-radius:30px;color:white;font-size:1.3rem;text-align:center;letter-spacing:8px}
-  .pass-error{margin-top:15px;color:#ff1b26;font-weight:bold;opacity:0;transition:opacity .4s}
-  .pass-error.show{opacity:1}
-  .footer{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:0.7rem;font-weight:bold;color:white;letter-spacing:1.5px;display:flex;gap:20px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UDI</title>
+  <link rel="icon" href="UDifavicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="UDifavicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    body, input, button { font-family: 'Special Elite', 'Courier New', monospace !important; }
+    body { margin:0; height:100vh; background:#Fd8c00; display:flex; align-items:center; justify-content:center; color:white; overflow:hidden; position:relative; }
+    .container { text-align:center; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
+    .logo { width:300px; margin-bottom:20px; }
+    .input-wrapper { position:relative; margin:15px auto; width:340px; max-width:90vw; }
+    .input-wrapper input {
+      width:100%; padding:12px 8px; background:rgba(255,255,255,0.06); border-radius:25px; border:none;
+      color:white; font-size:1rem; text-align:center; backdrop-filter:blur(10px);
+    }
+    .input-wrapper input::placeholder { color:rgba(255,255,255,0.4); }
+    .input-wrapper::before {
+      position:absolute; left:50%; top:-16px; transform:translateX(-50%);
+      font-weight:bold; color:white; letter-spacing:1.5px; font-size:0.95rem;
+    }
+    .input-wrapper:nth-of-type(1)::before { content:"X(Twitter):"; }
+    .input-wrapper:nth-of-type(2)::before { content:"Wallet:"; }
+    .input-wrapper:nth-of-type(3)::before { content:"Your 6-digit Code:"; }
+
+    button {
+      margin-top:15px; padding:10px 35px; background:rgba(255,255,255,0.08);
+      color:white; border:none; border-radius:30px; font-size:1.2rem;
+      font-weight:bold; letter-spacing:2px; cursor:pointer; transition:0.3s;
+    }
+    button:hover { background:white; color:#ff8c00; transform:translateY(-8px); }
+
+    .message { margin-top:15px; font-size:1.1rem; letter-spacing:2px; display:none; }
+    .error-msg { color:#ff1b26; }
+    .welcome { font-size:1.4rem !important; font-weight:bold; animation:bounce 1.8s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+
+    .footer {
+      position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+      font-size:0.7rem; font-weight:bold; color:white; letter-spacing:1.5px;
+      display:flex; gap:20px;
+    }
+
+    /* MÀN HÌNH NHẬP CODE 6 SỐ */
+    .password-screen {
+      position:fixed; top:0; left:0; right:0; bottom:0; background:#Fd8c00;
+      display:flex; align-items:center; justify-content:center; z-index:9999;
+    }
+    .pass-logo { width:280px; margin-bottom:30px; animation:bounce 1.8s infinite; }
+    #passInput {
+      width:340px; max-width:90vw; padding:18px 20px; background:rgba(255,255,255,0.08);
+      border:none; border-radius:30px; color:white; font-size:1.6rem; text-align:center;
+      letter-spacing:10px; backdrop-filter:blur(10px);
+    }
+    .pass-error { margin-top:20px; color:#ff1b26; font-weight:bold; opacity:0; transition:opacity .4s; }
+    .pass-error.show { opacity:1; }
+  </style>
 </head>
 <body>
 
-<div class="password-screen" id="passwordScreen">
-  <div class="pass-container">
-    <img src="Infinity.png" alt="UDI" class="pass-logo">
-    <input type="text" inputmode="numeric" maxlength="6" id="passInput" placeholder="______" autocomplete="off">
-    <div class="pass-error" id="passError">Invalid or already used code!</div>
+  <!-- MÀN HÌNH NHẬP 6-DIGIT CODE -->
+  <div class="password-screen" id="passwordScreen">
+    <div>
+      <img src="Infinity.png" alt="UDI" class="pass-logo">
+      <input type="text" inputmode="numeric" maxlength="6" id="passInput" placeholder="______" autocomplete="off">
+      <div class="pass-error" id="passError">Invalid or already used code!</div>
+    </div>
   </div>
-</div>
 
-<div class="container" id="mainForm" style="display:none">
-  <img src="Loon.gif" alt="UDI" class="logo">
-  <div class="input-wrapper"><input type="text" id="twitter" placeholder="@..."></div>
-  <div class="input-wrapper wallet"><input type="text" id="wallet" placeholder="0x..."></div>
-  <div class="input-wrapper code"><input type="text" maxlength="6" id="code" readonly style="background:rgba(0,255,0,0.15)"></div>
-  <button id="submitBtn">SUBMIT</button>
-  <div class="message" id="loading">Submitting...</div>
-  <div class="message error-msg" id="error"></div>
-  <div class="message welcome" id="welcome">WHITELISTED SUCCESS!!!</div>
-  <div class="footer">
-    <span>© 2025 UDI. All rights reserved.</span><span>│</span><span>contact@updowninfinity.xyz</span>
+  <!-- FORM CHÍNH -->
+  <div class="container" id="mainForm" style="display:none;">
+    <img src="Loon.gif" alt="UDI" class="logo">
+
+    <div class="input-wrapper"><input type="text" id="twitter" placeholder="@yourhandle"></div>
+    <div class="input-wrapper"><input type="text" id="wallet" placeholder="0x..."></div>
+    <div class="input-wrapper"><input type="text" id="code" maxlength="6" readonly style="background:rgba(0,255,0,0.15);"></div>
+
+    <button id="submitBtn">SUBMIT</button>
+
+    <div class="message" id="loading">Submitting...</div>
+    <div class="message error-msg" id="error"></div>
+    <div class="message welcome" id="welcome">WHITELISTED SUCCESS!!!</div>
+
+    <div class="footer">
+      <span>© 2025 UDI. All rights reserved.</span>
+      <span>│</span>
+      <span>contact@updowninfinity.xyz</span>
+    </div>
   </div>
-</div>
 
-<script>
-// ← CHỈ CẦN THAY 1 DÒNG DUY NHẤT Ở ĐÂY:
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
+  <script>
+    // <<< CHỈ CẦN THAY ĐÚNG 1 DÒNG NÀY LÀ XONG >>>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVSkboFYs7HpT4MhyiSe1vV7dFl1Nccaiw3pOzMyETmRqwnS_XR6-av5q73--kmc4M/exec';
 
-let currentUserCode = null;
-const passwordScreen = document.getElementById('passwordScreen');
-const mainForm       = document.getElementById('mainForm');
-const passInput      = document.getElementById('passInput');
-const passError      = document.getElementById('passError');
+    let currentUserCode = null;
+    const passwordScreen = document.getElementById('passwordScreen');
+    const mainForm       = document.getElementById('mainForm');
+    const passInput      = document.getElementById('passInput');
+    const passError      = document.getElementById('passError');
 
-passInput.focus();
+    passInput.focus();
 
-async function getValidCodes() {
-  try {
-    const r = await fetch(SCRIPT_URL + '?action=get_codes');
-    const d = await r.json();
-    return d.codes || [];
-  } catch { return []; }
-}
-
-passInput.addEventListener('input', async function() {
-  this.value = this.value.replace(/[^0-9]/g,'').slice(0,6);
-  if (this.value.length === 6) {
-    const valid = await getValidCodes();
-    if (valid.includes(this.value)) {
-      currentUserCode = this.value;
-      passwordScreen.style.opacity = '0';
-      setTimeout(() => {
-        passwordScreen.style.display = 'none';
-        mainForm.style.display = 'flex';
-        document.getElementById('code').value = currentUserCode;
-      }, 400);
-    } else {
-      passError.classList.add('show');
+    async function getValidCodes() {
+      try {
+        const r = await fetch(SCRIPT_URL + '?action=get_codes');
+        const d = await r.json();
+        return d.codes || [];
+      } catch { return []; }
     }
-  } else {
-    passError.classList.remove('show');
-  }
-});
 
-function isValidEthAddress(a) { return /^0x[a-fA-F0-9]{40}$/i.test(a); }
-
-document.getElementById('submitBtn').onclick = async () => {
-  let tw = document.getElementById('twitter').value.trim();
-  let wl = document.getElementById('wallet').value.trim();
-  let cd = document.getElementById('code').value.trim();
-
-  const loading = document.getElementById('loading');
-  const error   = document.getElementById('error');
-  const welcome = document.getElementById('welcome');
-  loading.style.display = error.style.display = welcome.style.display = 'none';
-
-  if (!tw || !wl || !cd) return error.textContent = 'Fill all fields', error.style.display='block';
-  if (!tw.startsWith('@')) tw = '@' + tw.replace(/^@+/,'');
-  document.getElementById('twitter').value = tw;
-  if (!wl.match(/^0x/i) || !isValidEthAddress(wl)) return error.textContent = 'Invalid wallet', error.style.display='block';
-  if (cd.length !== 6 || !/^\d+$/.test(cd)) return error.textContent = 'Invalid code', error.style.display='block';
-
-  document.getElementById('submitBtn').disabled = true;
-  loading.style.display = 'block';
-
-  try {
-    const r = await fetch(SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({action:'submit',twitter:tw,wallet:wl.toLowerCase(),code:cd,timestamp:new Date().toISOString()})
+    passInput.addEventListener('input', async function() {
+      this.value = this.value.replace(/[^0-9]/g,'').slice(0,6);
+      if (this.value.length === 6) {
+        const valid = await getValidCodes();
+        if (valid.includes(this.value)) {
+          currentUserCode = this.value;
+          passwordScreen.style.opacity = '0';
+          setTimeout(() => {
+            passwordScreen.style.display = 'none';
+            mainForm.style.display = 'flex';
+            document.getElementById('code').value = currentUserCode;
+          }, 400);
+        } else {
+          passError.classList.add('show');
+        }
+      } else {
+        passError.classList.remove('show');
+      }
     });
-    const d = await r.json();
-    if (d.result === 'success') {
-      welcome.style.display = 'block';
-      document.getElementById('twitter').value = document.getElementById('wallet').value = document.getElementById('code').value = '';
-    } else if (d.result === 'duplicate') {
-      error.textContent = 'Twitter, Wallet or Code already used!';
-      error.style.display = 'block';
-    } else {
-      error.textContent = 'Submit failed, try again';
-      error.style.display = 'block';
-    }
-  } catch { error.textContent = 'Network error', error.style.display='block'; }
-  finally {
-    document.getElementById('submitBtn').disabled = false;
-    loading.style.display = 'none';
-  }
-};
-</script>
+
+    function isValidEthAddress(a) { return /^0x[a-fA-F0-9]{40}$/i.test(a); }
+
+    document.getElementById('submitBtn').onclick = async () => {
+      let tw = document.getElementById('twitter').value.trim();
+      let wl = document.getElementById('wallet').value.trim();
+      let cd = document.getElementById('code').value.trim();
+
+      const loading = document.getElementById('loading');
+      const error   = document.getElementById('error');
+      const welcome = document.getElementById('welcome');
+      loading.style.display = error.style.display = welcome.style.display = 'none';
+
+      if (!tw || !wl || !cd) return error.textContent = 'Please fill all fields', error.style.display='block';
+      if (!tw.startsWith('@')) tw = '@' + tw.replace(/^@+/,'');
+      document.getElementById('twitter').value = tw;
+
+      if (!wl.match(/^0x/i) || !isValidEthAddress(wl)) return error.textContent = 'Invalid wallet address', error.style.display='block';
+      if (cd.length !== 6) return error.textContent = 'Invalid code', error.style.display='block';
+
+      document.getElementById('submitBtn').disabled = true;
+      loading.style.display = 'block';
+
+      try {
+        const r = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'text/plain'},
+          body: JSON.stringify({action:'submit', twitter:tw, wallet:wl.toLowerCase(), code:cd, timestamp:new Date().toISOString()})
+        });
+        const d = await r.json();
+
+        if (d.result === 'success') {
+          welcome.style.display = 'block';
+          document.getElementById('twitter').value = '';
+          document.getElementById('wallet').value = '';
+          document.getElementById('code').value = '';
+        } else if (d.result === 'duplicate') {
+          error.textContent = 'Twitter, Wallet or Code already used!';
+          error.style.display = 'block';
+        } else {
+          error.textContent = 'Something went wrong, try again';
+          error.style.display = 'block';
+        }
+      } catch {
+        error.textContent = 'Network error – try again later';
+        error.style.display = 'block';
+      } finally {
+        document.getElementById('submitBtn').disabled = false;
+        loading.style.display = 'none';
+      }
+    };
+  </script>
 </body>
 </html>
