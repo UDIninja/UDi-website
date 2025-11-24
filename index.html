@@ -173,7 +173,7 @@
     }
 
     passInput.addEventListener('input', async function () {
-      this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8).toUpperCase();
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
       passError.classList.remove('show');
       if (this.value.length === 8) {
         const valid = await getValidCodes();
