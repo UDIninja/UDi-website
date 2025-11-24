@@ -173,23 +173,34 @@
     }
 
     passInput.addEventListener('input', async function () {
-      this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
-      passError.classList.remove('show');
-      if (this.value.length === 8) {
-        const valid = await getValidCodes();
-        if (valid.includes(this.value)) {
-          currentUserCode = this.value;
-          passwordScreen.style.opacity = '0';
-          setTimeout(() => {
-            passwordScreen.style.display = 'none';
-            mainForm.style.display = 'flex';
-            document.getElementById('code').value = currentUserCode;
-          }, 400);
-        } else {
-          passError.classList.add('show');
-        }
+  this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
+  passError.classList.remove('show');
+
+  if (this.value.length === 8) {
+    const validCodes = await getValidCodes();   // danh sách code còn hiệu lực (chưa dùng)
+
+    if (validCodes.includes(this.value)) {
+      // Code đúng + còn hiệu lực → cho vào
+      currentUserCode = this.value;
+      passwordScreen.style.opacity = '0';
+      setTimeout(() => {
+        passwordScreen.style.display = 'none';
+        mainForm.style.display = 'flex';
+        document.getElementById('code').value = currentUserCode;
+      }, 400);
+    } else {
+      // Phân biệt: code sai hay đã dùng?
+      const allCodes = await fetch(SCRIPT_URL + '?action=get_all_codes').then(r => r.json()).then(d => d.codes || []);
+      
+      if (allCodes.includes(this.value)) {
+        passError.textContent = 'Code already used!';
+      } else {
+        passError.textContent = 'Invalid code!';
       }
-    });
+      passError.classList.add('show');
+    }
+  }
+});
 
     function isValidEthAddress(a) { return /^0x[a-fA-F0-9]{40}$/i.test(a); }
 
