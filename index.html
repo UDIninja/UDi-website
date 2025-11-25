@@ -246,16 +246,6 @@
       } catch { error.textContent = 'Network error – try again later'; error.style.display='block'; }
       finally { document.getElementById('submitBtn').disabled = false; loading.style.display='none'; }
     });
-    <script>
-// Chỉ cần dán 3 dòng này vào cuối file HTML, trước </body> là footer hiện ngay 100%
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".footer").forEach(f => {
-    f.style.position = "fixed";
-    f.style.bottom = "15px";
-    f.style.zIndex = "99999";
-  });
-});
-</script>
   </script>
 </body>
 </html>
