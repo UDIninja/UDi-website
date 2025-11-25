@@ -187,7 +187,7 @@
         passwordScreen.style.display = 'none';
         mainForm.style.display = 'flex';
         document.getElementById('code').value = currentUserCode;
-      }, 100);
+      }, 200);
     } else {
       // Phân biệt: code sai hay đã dùng?
       const allCodes = await fetch(SCRIPT_URL + '?action=get_all_codes').then(r => r.json()).then(d => d.codes || []);
