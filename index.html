@@ -20,7 +20,7 @@
 
     /* PASSWORD SCREEN */
     .password-screen {
-      position:fixed; inset:0 0 70px 0; background:#Fd8c00;
+      position:fixed; inset:0; background:#Fd8c00;
       display:flex; align-items:center; justify-content:center;
       z-index:1; padding:20px;
     }
@@ -105,7 +105,7 @@
   background: rgba(255,255,255,0.15);
 }
     .footer {
-      position:fixed; z-index:9999; bottom:15px; left:50%; transform:translateX(-50%);
+      position:fixed; bottom:15px; left:50%; transform:translateX(-50%);
       font-size:0.75rem; font-weight:bold; letter-spacing:1.5px;
       display:flex; gap:20px; white-space:nowrap;
       font-family:'Special Elite', monospace !important;
@@ -246,6 +246,12 @@
       } catch { error.textContent = 'Network error – try again later'; error.style.display='block'; }
       finally { document.getElementById('submitBtn').disabled = false; loading.style.display='none'; }
     });
+      document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".footer").forEach(f => {
+    f.style.position = "fixed";
+    f.style.bottom = "15px";
+    f.style.zIndex = "99999";
+  });
   </script>
 </body>
 </html>
