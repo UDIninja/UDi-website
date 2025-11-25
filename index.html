@@ -112,7 +112,10 @@
     }
 
     @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-    * { -webkit-tap-highlight-color: transparent !important; }
+    input:focus, input:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
   </style>
 </head>
 <body>
